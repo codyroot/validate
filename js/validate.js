@@ -1,7 +1,6 @@
 var Validate = (function (config) {
     "use strict";
 
-    // private vars
     var doc = document, 
         win = window, 
         con = config, 
