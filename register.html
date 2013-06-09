@@ -64,8 +64,7 @@
     </div>
 
     <!-- JavaScript Files @HTML5 -->
-    <script src="js/event.js"></script>
-    <script src="js/forms.js"></script>
+    <script src="js/validate.js"></script>
     <script>
         // Call
         Validate({
@@ -78,14 +77,6 @@
                 email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
             }
         });
-
-        eventUtility.addEvent(window, "resize", size);
-        eventUtility.addEvent(window, "load", size);
-
-        function size() {
-            document.querySelector("#size").innerHTML = "Width: " + window.innerWidth;
-        };
-
     </script>
 </body>
 </html>

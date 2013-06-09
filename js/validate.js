@@ -15,7 +15,35 @@ var Validate = (function (config) {
         optional = (con.optional) ? con.optional : false, 
         form = doc.querySelector(con.form), 
         validFields = doc.querySelectorAll(con.form + " .true").length, 
-        reg, field, valueLen, 
+        reg, field, valueLen,
+
+        eventUtility = {
+            addEvent : function(el, type, fn) {
+                if (el.addEventListener) {
+                    el.addEventListener(type, fn, false);
+                } else if (el.attachEvent) {
+                    el.attachEvent("on" + type, fn);
+                } else {
+                    el["on" + type] = fn;
+                }
+            },
+
+            getTarget : function(event) {
+                if (event.target) {
+                    return event.target;
+                } else {
+                    return event.srcElement;
+                }
+            },
+   
+            preventDefault : function(event) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else {
+                    event.returnValue = false;
+                }
+            }
+    },
 
     // Feature Detection
         supportType = function (type) {
