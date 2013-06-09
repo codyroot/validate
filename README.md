@@ -21,7 +21,7 @@ Validate({
     form: "#form" 
     inputs: {  
         tel: /^[\+\(\)\s0-9]+$/
-    }  
+}  
 ```
 ```html
 <form id="form">
