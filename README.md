@@ -7,7 +7,7 @@ A Library to Validate your forms.
 ```javascript
 Validate({  
     form: #id 
-	// All fields will be validated
+	// These fields will be validated
     inputs: {
 		//id: Reg Exp  
         field: RegExp,  
@@ -25,17 +25,15 @@ Validate({
 ```
 ```html
 <form id="form">
-	<div>
-		<label for="tel">Phonenumber</label>
-		<input pattern="[\+\(\)\s0-9]+"
-		data-support="tel"
-		id="tel"
-		name="tel"
-		type="tel"
-		title="Only Numbers, +, and ()"
-		required />
-		<span title="Only Numbers, +, and ()"></span>
-	</div>
+	<input pattern="[\+\(\)\s0-9]+"
+	data-support="tel"
+	id="tel"
+	name="tel"
+	type="tel"
+	title="Only Numbers, +, and ()"
+	required />
+	<!-- Error Message shows up in the next Element -->
+	<span title="Only Numbers, +, and ()"></span>
 </form>
 ```
 ## Browsersupport
