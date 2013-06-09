@@ -108,7 +108,7 @@ var Validate = (function (config) {
     // Event Delegation
         event = function (evt) {
 
-            var el = eventUtility.getTarget(evt), // Element HTML       
+            var el = eventUtility.getTarget(evt), // Element HTML
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
                 id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
                 support = supportType(dataAttribut(el, "support"));
