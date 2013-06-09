@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" />
+    <link href="style/reset.css" rel="stylesheet" />
+    <link href="style/form.css" rel="stylesheet" />
+    <link href="style/error.css" rel="stylesheet" />
+    <link href="style/media.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="size"></div>
+    <div class="wrapper">
+        <form action="#" method="get" id="form">
+            <fieldset>
+                <legend>Register</legend>
+                <p>*required Fields</p>
+
+                <fieldset class="left clearfix">
+                    <legend>Personal</legend>
+
+                    <div>
+                        <label for="vorname" class="required">Vorname</label>
+                        <input pattern="[a-zA-Z\s]+" data-support="text" id="vorname" name="vorname" type="text"
+                            placeholder="Max" title="Only Letters!" required />
+                        <span class="info" title="Only Letters!"></span>
+                    </div>
+
+                    <div>
+                        <label for="nachname" class="required">Nachname</label>
+                        <input pattern="[a-zA-Z\s]+" data-support="text" id="nachname" name="nachname" type="text"
+                            placeholder="Mustermann" title="Only Letters!" required />
+                        <span class="info" title="Only Letters!"></span>
+                    </div>
+
+                </fieldset>
+
+                <fieldset class="right clearfix">
+                    <legend>Contact</legend>
+
+                    <div>
+                        <label for="tel" class="required">Telefon</label>
+                        <input pattern="[\+\(\)\s0-9]+" data-support="tel" id="tel" name="tel" type="tel"
+                            placeholder="+49 176 123 456" title="Only Numbers, +, and ()" required />
+                        <span class="info"
+                            title="Only Numbers, +, and ()"></span>
+                    </div>
+
+                    <div>
+                        <label for="email" class="required">E-Mail</label>
+                        <input data-support="email" id="email" name="email" type="email" placeholder="user@example.org"
+                            title="user@example.org" required />
+                        <span class="info"
+                            title="user@example.org"></span>
+                    </div>
+
+                </fieldset>
+
+                <input type="submit" value="Send" id="senden" />
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- JavaScript Files @HTML5 -->
+    <script src="js/event.js"></script>
+    <script src="js/forms.js"></script>
+    <script>
+        // Call
+        var form = Validate({
+            form: "#form", // get the form
+            // Valid field: id: RegExp
+            inputs: {
+                vorname: /^[a-z\s]+$/i,
+                nachname: /^[a-z\s]+$/i,
+                tel: /^[\+\(\)\s0-9]+$/,
+                email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
+            }
+        });
+
+        eventUtility.addEvent(window, "resize", size);
+        eventUtility.addEvent(window, "load", size);
+
+        function size() {
+            document.querySelector("#size").innerHTML = "Width: " + window.innerWidth;
+        };
+
+    </script>
+</body>
+</html>

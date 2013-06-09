@@ -1,0 +1,131 @@
+body {
+    font: normal normal 16px/22px 'Source Sans Pro',sans-serif;
+}
+
+.wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+/*
+------------------------------------------------- Form Layout
+*/
+
+#form {
+    position: relative;
+    margin: 30px 5px 5px 5px;
+}
+
+    #form > fieldset {
+        padding: 2%;
+    }
+
+    #form legend {
+        width: 100%;
+    }
+
+    #form > fieldset > legend {
+        color: #000;
+        font-size: 1.2em;
+        letter-spacing: 1px;
+        padding: 8px 21px 7px 0px;
+        border-bottom: 3px solid #f21c0a;
+    }
+
+    #form > fieldset > fieldset {
+        margin: 10px 0;
+    }
+
+        #form > fieldset > fieldset > legend {
+            padding: 0 .5%;
+            border: 1px solid #e7e7e7;
+            background: #f3f3f3;
+        }
+
+        #form p:before, #form .required:after {
+            content: "*";
+            color: #f21c0a;
+            font-size: 1.4em;
+        }
+
+    #form div {
+        border: 1px solid #efefef;
+        border-left: none;
+        border-right: none;
+        position: relative;
+        padding: .4em 0;
+        margin: 0 0 1em 0;
+        min-height: 70px;
+    }
+
+    #form label {
+        display: block;
+    }
+
+    #form .required {
+        font-weight: bold;
+    }
+
+    #form select {
+        border: 1px solid #d0d0d0;
+        width: 25%;
+    }
+
+    #form input {
+        border: 1px solid #d0d0d0;
+        width: 100%;
+        padding: .2em;
+        background: #f3f3f3;
+        background: #fdffc5;
+        display: block;
+    }
+
+        #form input:focus {
+            border: 1px solid #000;
+            outline: none;
+            background: #fff;
+        }
+
+    #form #senden {
+        display: block;
+        background-color: #f21c0a;
+        color: #fff;
+        cursor: pointer;
+        border: 1px solid #d00;
+        padding: 1% 2%;
+        width: 100%;
+    }
+
+        #form #senden:hover {
+            background-color: #9D1307;
+            color: #fff;
+            border-color: #a00;
+        }
+
+    /*placeholder Styling ---------------------------------- */
+    /* Webkit */
+    #form input::-webkit-input-placeholder {
+        color: #d0d0d0;
+        font-style: italic;
+        opacity: 1;
+    }
+
+    /* Firefox 19+ */
+    #form input::-moz-placeholder {
+        color: #d0d0d0;
+        font-style: italic;
+        opacity: 1;
+    }
+
+    /* Firefox 4-18 */
+    #form input:-moz-placeholder {
+        color: #d0d0d0;
+        font-style: italic;
+        opacity: 1;
+    }
+
+    /* IE 10+ */
+    #form input:-ms-placeholder {
+        color: #d0d0d0;
+        font-style: italic;
+        opacity: 1;
+    }

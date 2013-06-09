@@ -1,0 +1,28 @@
+/*
+------------------------------------------------- RESET CSS
+*/
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    vertical-align: baseline;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+}
+
+/*
+------------------------------------------------- Clearfix
+*/
+
+.clearfix:before, .clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}

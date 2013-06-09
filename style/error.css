@@ -1,0 +1,81 @@
+/*
+------------------------------------------------- Info Hover
+*/
+.info {
+    cursor: help;
+    position: relative;
+    display: inline-block;
+    background: #fff url(../img/info.png) left 0 no-repeat;
+    min-width: 20px;
+    height: 20px;
+    margin: 10px 0 5px 0;
+    width: 100%;
+}
+
+/*
+------------------------------------------------- JS Klassen --> span
+*/
+.errorTrue {
+    color: limegreen;
+}
+
+.errorFalse {
+    color: red;
+}
+/*
+------------------------------------------------- Error MSG
+*/
+.errorBox {
+    font-size: 0.625em;
+    border: 1px solid #d0d0d0;
+    position: absolute;
+    left: 33px;
+    padding: 4px;
+    background: #fff;
+    border-radius: 6px;
+    -webkit-box-shadow: 1px 1px 3px #d0d0d0;
+    box-shadow: 1px 1px 3px #d0d0d0;
+}
+
+    .errorBox:after, .errorBox:before {
+        right: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .errorBox:after {
+        border-color: transparent;
+        border-right-color: #fff;
+        border-width: 12px;
+        top: 50%;
+        margin-top: -12px;
+    }
+
+    .errorBox:before {
+        border-color: transparent;
+        border-right-color: #d0d0d0;
+        border-width: 13px;
+        top: 50%;
+        margin-top: -13px;
+    }
+
+.false /*, #form input:not([type="submit"]):invalid */ {
+    color: #f21c0a;
+    border: 1px solid red!important;
+    -webkit-box-shadow: 0 0 3px 0 #f21c0a;
+    box-shadow: 0 0 3px 0 #f21c0a;
+    background: #fff!important;
+}
+
+.true /*, #form input:not([type="submit"]):valid*/ {
+    color: #008311;
+    color: black;
+    background: #fff!important;
+    -webkit-box-shadow: 0 0 3px -1px #008311;
+    box-shadow: 0 0 3px -1px #008311;
+    border: 1px solid #008311!important;
+}

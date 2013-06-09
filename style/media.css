@@ -1,0 +1,94 @@
+/*
+------------------------------------------------- Media Queries Mobile First!
+*/
+@media screen and (min-width: 480px) {
+    body {
+        font-size: 1.1em;
+    }
+
+    #form #senden {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .errorBox {
+        font-size: .7em;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #form div {
+        padding-bottom: 1em;
+    }
+
+    #form #senden {
+        width: 25%;
+    }
+
+    #form input {
+        width: 40%;
+        display: inline-block;
+    }
+
+    #form .info {
+        width: 59%;
+        display: inline-block;
+        margin: 0;
+        vertical-align: middle;
+    }
+
+    .errorBox {
+        font-size: .8em;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    body {
+        font-size: 1.2em;
+    }
+
+    #form > fieldset {
+        border: none;
+    }
+
+        #form > fieldset > fieldset {
+            width: 48.5%;
+            margin: 1% 0;
+            border: 1px solid #d0d0d0;
+            padding: 1%;
+        }
+
+            #form > fieldset > fieldset > legend {
+                background: #fff;
+                border: none;
+                font-style: italic;
+                width: 35%; /* Textlength !!!*/
+            }
+
+    #form p {
+        font-size: 1.1em;
+    }
+
+    #form .left {
+        float: left;
+    }
+
+    #form .right {
+        float: right;
+    }
+
+    #form div {
+        border: none;
+        margin: .2em 0;
+        padding: 0 0 .5em 0;
+    }
+
+    #form #senden {
+        width: 15%;
+        padding: .5% 1%;
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 1130px) {
+}
