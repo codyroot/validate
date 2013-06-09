@@ -9,7 +9,7 @@ Validate({
     form: #id 
 	// These fields will be validated
     inputs: {
-		//id: Reg Exp  
+		// id: Reg Exp  
         field: RegExp,  
     }  
 });
@@ -32,7 +32,7 @@ Validate({
 	type="tel"
 	title="Only Numbers, +, and ()"
 	required />
-	<!-- Error Message shows up in the next Element -->
+	<!-- Error Message shows up in the next Element , in this case the span-->
 	<span title="Only Numbers, +, and ()"></span>
 </form>
 ```
