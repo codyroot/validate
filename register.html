@@ -16,20 +16,20 @@
         <form action="#" method="get" id="form">
             <fieldset>
                 <legend>Register</legend>
-                <p>*required Fields</p>
+                <p>required Fields</p>
 
                 <fieldset class="left clearfix">
                     <legend>Personal</legend>
 
                     <div>
-                        <label for="vorname" class="required">Vorname</label>
+                        <label for="vorname" class="required">Firstname</label>
                         <input pattern="[a-zA-Z\s]+" data-support="text" id="vorname" name="vorname" type="text"
                             placeholder="Max" title="Only Letters!" required />
                         <span class="info" title="Only Letters!"></span>
                     </div>
 
                     <div>
-                        <label for="nachname" class="required">Nachname</label>
+                        <label for="nachname" class="required">Lastname</label>
                         <input pattern="[a-zA-Z\s]+" data-support="text" id="nachname" name="nachname" type="text"
                             placeholder="Mustermann" title="Only Letters!" required />
                         <span class="info" title="Only Letters!"></span>
@@ -41,7 +41,7 @@
                     <legend>Contact</legend>
 
                     <div>
-                        <label for="tel" class="required">Telefon</label>
+                        <label for="tel" class="required">Phonenumber</label>
                         <input pattern="[\+\(\)\s0-9]+" data-support="tel" id="tel" name="tel" type="tel"
                             placeholder="+49 176 123 456" title="Only Numbers, +, and ()" required />
                         <span class="info"
@@ -68,7 +68,7 @@
     <script src="js/forms.js"></script>
     <script>
         // Call
-        var form = Validate({
+       Validate({
             form: "#form", // get the form
             // Valid field: id: RegExp
             inputs: {
