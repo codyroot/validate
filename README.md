@@ -4,7 +4,7 @@ A Library to Validate your forms.
 
 ## Usage
 ### Theoretical
-
+```javascript
 Validate({  
     form: #id 
 	// All fields will be validated
@@ -13,16 +13,18 @@ Validate({
         field: RegExp,  
     }  
 });
+```
 
 ### Practical
-
+```javascript
 Validate({  
     form: "#form" 
     inputs: {  
         tel: /^[\+\(\)\s0-9]+$/,
         email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
     }  
-
+```
+```html
 &lt;form action=&quot;#&quot; method=&quot;get&quot; id=&quot;form&quot;&gt;
     &lt;div&gt;
         &lt;label for=&quot;vorname&quot; class=&quot;required&quot;&gt;Firstname&lt;/label&gt;
@@ -31,6 +33,7 @@ Validate({
         &lt;span class=&quot;info&quot; title=&quot;Only Letters!&quot;&gt;&lt;/span&gt;
     &lt;/div&gt;
 &lt;/form&gt;
+```
 ## Browsersupport
 
 Internet Explorer 7+  
