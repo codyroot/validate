@@ -47,7 +47,7 @@ The Element will be appended in the next Element after the input.
 **Position and Border:** .errorBox   
 **Textcolors:** .errorTrue & .errorFalse
 
-###Example Styling
+####Example Styling
 ```css
 .errorTrue {
 	color: limegreen;
