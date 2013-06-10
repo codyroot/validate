@@ -5,10 +5,17 @@ var Validate = (function (config) {
         win = window, 
         con = config, 
         input = (con.inputs) ? con.inputs : false, 
-        optional = (con.optional) ? con.optional : false, 
         form = doc.querySelector(con.form), 
         validFields = doc.querySelectorAll(con.form + " .true").length, 
         reg, field, valueLen,
+        
+        // Default RegExp Werte
+        defaultReg = {
+            text: /^[A-Za-z\s]+$/,
+            tel: /^[\+\(\)\s0-9]+$/,
+            email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i,
+            number: /^[0-9]+$/
+        },
 
         eventUtility = {
             addEvent : function(el, type, fn) {
@@ -79,7 +86,7 @@ var Validate = (function (config) {
         },
 
     // Length all Fields
-        countFields = objLength(input) + objLength(optional),
+        countFields = objLength(input),
 
     // Message
         insertMsg = function (el, bool) {
@@ -104,18 +111,11 @@ var Validate = (function (config) {
             var el = eventUtility.getTarget(evt), // Element HTML
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
                 id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
+                pattern = el.pattern, // RegExp im input
                 support = supportType(dataAttribut(el, "support"));
 
             // Reg Exp aus dem Objekt
-            reg = (input[id]) ? input[id] : false;
-
-            if (input[id]) {
-                reg = input[id];
-            } else if (optional[id]) {
-                reg = optional[id];
-            } else {
-                reg = false;
-            }
+            reg = (input[id]) ? input[id] : defaultReg[dataAttribut(el,"support")]
 
             console.log(reg);
             console.log(countFields + "||" + validFields);
@@ -127,7 +127,7 @@ var Validate = (function (config) {
                 valueLen = (field.value.length > 0); // nicht verwendet aktuell
 
                 // Wird das inputfeld unterstützt und untersteht es der automatischen Validierung
-                if (support && field.willValidate) {
+                if (support && field.willValidate && pattern) {
 
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
                     if (field.checkValidity()) {
