@@ -39,8 +39,8 @@ Validate({
 ```
 ## Browsersupport
 
-Internet Explorer 7+  
+Internet Explorer 8+  
 Mozilla Firefox 3.6+  
-Google Chrome 4+  
+Google Chrome 1+  
 Safari 5+  
-Opera 11+  
+Opera 9.6+  
