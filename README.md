@@ -6,7 +6,7 @@ A Library to Validate your forms.
 ### Theoretical
 ```javascript
 Validate({  
-    form: #id 
+    form: #id, 
 	// These fields will be validated
     inputs: {
 		// id: Reg Exp  
@@ -19,7 +19,7 @@ Validate({
 #### JavaScript
 ```javascript
 Validate({  
-    form: "#form" 
+    form: "#form", 
     inputs: {  
         tel: /^[\+\(\)\s0-9]+$/
     }
