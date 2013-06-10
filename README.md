@@ -3,16 +3,30 @@
 A Library to Validate your forms.
 
 ## Usage
-### Theoretical
+### Minimal Example
+#### JavaScript 
 ```javascript
 Validate({  
-    form: #id, 
+    form: "#form", 
 	// These fields will be validated
     inputs: {
-		// id: Reg Exp  
-        field: RegExp,  
+	// id of the <input>: RegExp  
+        tel: false, // or add a custom RegExp  
     }  
 });
+```
+
+#### HTML Requirements
+The **id** and the **data-support** Attribut are required. The value of the **data-support** must be equal as **the type value**.
+```html
+<form id="form">
+	<input
+	data-support="tel"
+	id="tel"
+	type="tel" />
+	<!-- Error Message shows up in the next Element, in this case the span-->
+	<span></span>
+</form>
 ```
 
 ### Practical
@@ -42,7 +56,7 @@ Validate({
 ## Styling
 ### Errorbox
 There are 3 classes available for styling the error messages.
-The Element will be appended in the next Element after the input.
+The Element will be appended to the next Element after the input.
 
 **Position and Border:** .errorBox   
 **Textcolors:** .errorTrue & .errorFalse
