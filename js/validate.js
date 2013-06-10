@@ -91,16 +91,17 @@ var Validate = (function (config) {
     // Message
         insertMsg = function (el, bool) {
             var nextElement = nextSibling(el),
+                title = (el.title) ? el.title : "Incorrect input!",
                 pos = function () { 
                     return nextElement.firstChild.offsetHeight / 2 - nextElement.offsetHeight / 2;
                 };
 
             if (bool) {
                 el.setAttribute("class", "true");
-                nextElement.innerHTML = "<span class='errorBox errorTrue'>✔ Right!</span>"; //
+                nextElement.innerHTML = "<span class='errorBox errorTrue'>✔ Correct Input!</span>"; //
             } else {
                 el.setAttribute("class", "false");
-                nextElement.innerHTML = "<span class='errorBox errorFalse' title='asda'>" + el.title + "</span>";
+                nextElement.innerHTML = "<span class='errorBox errorFalse' title='asda'>" + title + "</span>";
             }
             nextElement.firstChild.style.top = -pos() + "px";
         },
