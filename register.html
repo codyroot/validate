@@ -5,10 +5,10 @@
     <title>Validate.js Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" />
-    <link href="style/reset.css" rel="stylesheet" />
+<!--    <link href="style/reset.css" rel="stylesheet" />
     <link href="style/form.css" rel="stylesheet" />
-    <link href="style/error.css" rel="stylesheet" />
-    <link href="style/media.css" rel="stylesheet" />
+    <link href="style/validate.css" rel="stylesheet" />
+    <link href="style/media.css" rel="stylesheet" />--><link href="style/validate.css" rel="stylesheet" />
 </head>
 <body>
     <div id="size"></div>
@@ -21,28 +21,23 @@
 
                 <fieldset class="left clearfix">
                     <legend>Personal</legend>
-
                     <div>
-                        <h2>This Field has the minimum of attributes</h2>
+                        <h2>This Field has the minimum of attributes!</h2>
                         <label for="vorname" class="required">Firstname</label>
                         <input data-support="text" id="vorname" type="text" />
-                        <span class="info" title="Only Letters!"></span>
                     </div>
-
                 </fieldset>
 
                 <fieldset class="right clearfix">
                     <legend>Contact</legend>
-
-                   <div>
-                        <h2>This Field has the optimum of attributes</h2>
-                        <label for="nachname" class="required">Lastname</label>
-                        <input pattern="[a-zA-Z\s]+" data-support="text" id="nachname" name="nachname" type="text"
-                            placeholder="Mustermann" title="Only Letters!" required />
-                        <span class="info" title="Only Letters!"></span>
+                    <div>
+                        <h2>This Field has the optimum of attributes!</h2>
+                        <label for="tel" class="required">Phone</label>
+                        <input pattern="[\+\(\)\s0-9]+" data-support="tel" id="tel" name="tel" type="tel"
+                            placeholder="+49 176 123 456" title="Valid Chars: Numbers, +, ()" required />
+                        <!--<span class="info" title="Valid Chars: Numbers, +, ()"></span>-->
                     </div>
                 </fieldset>
-
                 <input type="submit" value="Send" id="senden" />
             </fieldset>
         </form>
@@ -62,7 +57,6 @@
                 email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
             }
         });
-
     </script>
 </body>
 </html>

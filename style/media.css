@@ -1,6 +1,12 @@
 /*
 ------------------------------------------------- Media Queries Mobile First!
 */
+@media screen and (min-width: 240px) {
+    .errorBox {
+        font-size: 0.725em;
+    }
+}
+
 @media screen and (min-width: 480px) {
     body {
         font-size: 1.1em;

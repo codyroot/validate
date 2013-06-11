@@ -7,11 +7,13 @@ var Validate = (function (config) {
         input = (con.inputs) ? con.inputs : false,
         // ID des Formulars
         form = doc.querySelector(con.form),
+        // all inputs
+        fields = doc.querySelectorAll(con.form + " input"),
         // Anzahl der korrekt ausgefüllten Felder
         validFields = doc.querySelectorAll(con.form + " .true").length,
         // RegExp aus dem Objekt + DOM Zugriff auf die des inputs + input Value Länge
         reg, field, valueLen,
-        
+
         // Default RegExp Werte
         defaultReg = {
             text: /^[A-Za-z\s]+$/,
@@ -22,7 +24,7 @@ var Validate = (function (config) {
 
         // Cross Browser Events
         eventUtility = {
-            addEvent : function(el, type, fn) {
+            addEvent: function (el, type, fn) {
                 if (el.addEventListener) {
                     el.addEventListener(type, fn, false);
                 } else if (el.attachEvent) {
@@ -32,15 +34,15 @@ var Validate = (function (config) {
                 }
             },
 
-            getTarget : function(event) {
+            getTarget: function (event) {
                 if (event.target) {
                     return event.target;
                 } else {
                     return event.srcElement;
                 }
             },
-   
-            preventDefault : function(event) {
+
+            preventDefault: function (event) {
                 if (event.preventDefault) {
                     event.preventDefault();
                 } else {
@@ -49,11 +51,20 @@ var Validate = (function (config) {
             }
         },
 
-    // Feature Detection
+        // Feature Detection
         supportType = function (type) {
             var i = document.createElement("input");
             i.setAttribute("type", type);
             return i.type === type;
+        },
+
+        // insert span for the error message
+        insertElement = function (e) {
+            for (var i = 0; i < fields.length; i++) {
+                if (!(fields[i].type == "submit")) {
+                    fields[i].insertAdjacentHTML("afterend", "<span></span>");
+                }
+            }
         },
 
     // IE Fallback for nextElementSibling
@@ -65,6 +76,9 @@ var Validate = (function (config) {
                     el = el.nextSibling;
                 } while (el && el.nodeType !== 1);
             }
+            // Styling the Element after the input
+            el.style.position = "relative";
+            el.setAttribute("class", "info");
             return el;
         },
 
@@ -96,7 +110,7 @@ var Validate = (function (config) {
         insertMsg = function (el, bool) {
             var nextElement = nextSibling(el),
                 title = (el.title) ? el.title : "Incorrect input!",
-                pos = function () { 
+                pos = function () {
                     return nextElement.firstChild.offsetHeight / 2 - nextElement.offsetHeight / 2;
                 };
 
@@ -105,7 +119,7 @@ var Validate = (function (config) {
                 nextElement.innerHTML = "<span class='errorBox errorTrue'>✔ Correct Input!</span>";
             } else {
                 el.setAttribute("class", "false");
-                nextElement.innerHTML = "<span class='errorBox errorFalse' title='asda'>" + title + "</span>";
+                nextElement.innerHTML = "<span class='errorBox errorFalse'>" + title + "</span>";
             }
             // Positionswert
             nextElement.firstChild.style.top = -pos() + "px";
@@ -154,27 +168,33 @@ var Validate = (function (config) {
                     console.log("Browser unterstützt das Feld,die automat. Validierung oder kein pattern Attribut ist gesetzt");
                 }
             }
+        },
+
+        // Send
+        send = function (evt) {
+
+            // Aufruf nochmals, da querySel. keine Live NodeLists zurückgeben
+            validFields = doc.querySelectorAll(con.form + " .true").length;
+            console.dir(validFields);
+
+            // Vergleich valide Felder mit Anzahl der zu valid. Felder
+            if (countFields !== validFields) {
+                eventUtility.preventDefault(evt);
+                alert("Formular nicht abgeschickt");
+            }
+            console.log(countFields + " || " + validFields);
+            alert(countFields + " || " + validFields);
         };
 
+    // Events
+    
     // Cross Browser Events
     eventUtility.addEvent(form, "keyup", event);
     eventUtility.addEvent(form, "change", event);
 
+    // Append spans after the inputs
+    eventUtility.addEvent(window, "load", insertElement);
+
     // Senden Button
-    eventUtility.addEvent(form, "submit", function (evt) {
-
-        // Aufruf nochmals, da querySel. keine Live NodeLists zurückgeben
-        validFields = doc.querySelectorAll(con.form + " .true").length;
-        console.dir(validFields);
-
-        alert(countFields + " || " + validFields);
-
-        // Vergleich valide Felder mit Anzahl der zu valid. Felder
-        if (countFields !== validFields) {
-            eventUtility.preventDefault(evt);
-            alert("Formular nicht abgeschickt");
-        }
-        console.log(countFields + " || " + validFields);
-
-    });
+    eventUtility.addEvent(form, "submit", send);
 });

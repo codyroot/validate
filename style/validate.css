@@ -26,7 +26,6 @@
 ------------------------------------------------- Error MSG
 */
 .errorBox {
-    font-size: 0.625em;
     border: 1px solid #d0d0d0;
     position: absolute;
     left: 33px;
@@ -75,7 +74,7 @@
     color: #008311;
     color: black;
     background: #fff!important;
-    -webkit-box-shadow: 0 0 3px -1px #008311;
-    box-shadow: 0 0 3px -1px #008311;
+    -webkit-box-shadow: 0 0 3px 0 #008311;
+    box-shadow: 0 0 3px 0 #008311;
     border: 1px solid #008311!important;
 }
