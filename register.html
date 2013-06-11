@@ -23,7 +23,7 @@
                     <div>
                         <h2>This Field has the minimum of attributes!</h2>
                         <label for="vorname" class="required">Firstname</label>
-                        <input data-support="text" id="vorname" type="text" />
+                        <input data-support="" data-reg="postcodeGer" id="vorname" type="text" />
                     </div>
                 </fieldset>
 
@@ -50,7 +50,7 @@
             form: "#form", // get the form
             // Valid field: id: RegExp
             inputs: {
-                vorname: /^[a-z\s]+$/i,
+                vorname: "",
                 tel: /^[\+\(\)\s0-9]+$/
             }
         });

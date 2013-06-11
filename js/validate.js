@@ -19,7 +19,11 @@ var Validate = (function (config) {
             text: /^[A-Za-z\s]+$/,
             tel: /^[\+\(\)\s0-9]+$/,
             email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i,
-            number: /^[0-9]+$/
+            number: /^[0-9]+$/,
+            // Autoren RegExp in der data-reg
+            postcodeGer: /^[0-9]{5}$/,
+            street: /[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,
+            fullname: /[a-zA-ZäöüÄÖÜ]+ [a-zA-ZäöüÄÖÜ]+/
         },
 
         // Cross Browser Events
@@ -61,8 +65,13 @@ var Validate = (function (config) {
         // insert span for the error message
         insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
-                if (!(fields[i].type == "submit")) {
+                if (fields[i].type !== "submit") {
+                    var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
                     fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
+                    fields[i].setAttribute("pattern", setPattern
+                        .replace(/\//g, "")
+                        .replace(/\^/g, "")
+                        .replace(/\$/, ""));
                 }
             }
         },
@@ -132,10 +141,25 @@ var Validate = (function (config) {
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
                 id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
                 pattern = el.pattern, // RegExp im input
-                support = supportType(dataAttribut(el, "support"));
+                type = el.type, // type of the id
+                dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
+                support = supportType(dataSupport), // Element Supported true/false
+                defReg = defaultReg[dataSupport], // Default RegExp type=support
+                defReg2 = defaultReg[dataAttribut(el, "reg")]; // Default RegExp Autor
 
             // Reg Exp aus dem Objekt oder den default Werten
-            reg = (input[id]) ? input[id] : defaultReg[dataAttribut(el, "support")];
+            //reg = (input[id]) ? input[id] : defaultReg[dataAttribut(el, "support")];
+
+            if (input[id]) {
+                reg = input[id];
+                console.log("if");
+            }else if (type === dataSupport) {
+                reg = defReg;
+                console.log("else if");
+            } else {
+                reg = defReg2;
+                console.log("else");
+            }
 
             console.log(reg);
 
