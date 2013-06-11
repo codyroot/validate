@@ -57,6 +57,7 @@ var Validate = (function (config) {
 
         // Feature Detection
         supportType = function (type) {
+            // if (/a|b|c/.test(val))
             var i = document.createElement("input");
             i.setAttribute("type", type);
             return i.type === type;
@@ -66,12 +67,19 @@ var Validate = (function (config) {
         insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
                 if (fields[i].type !== "submit") {
-                    var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
-                    fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
-                    fields[i].setAttribute("pattern", setPattern
+                    if (dataAttribut(fields[i], "reg") && fields[i].type !== "number") {
+                        console.log("Felder Number FF");
+                        // Konvertieren von RegExp zu Strings
+                        var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
+                        // Bestimmte zeichen aus dem Pattern Löschen
+                        fields[i].setAttribute("pattern", setPattern
                         .replace(/\//g, "")
                         .replace(/\^/g, "")
                         .replace(/\$/, ""));
+                    }
+                    // Append span.info
+                    fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
+                    fields[i].setAttribute("data-support", fields[i].type);
                 }
             }
         },
@@ -153,7 +161,7 @@ var Validate = (function (config) {
             if (input[id]) {
                 reg = input[id];
                 console.log("if");
-            }else if (type === dataSupport) {
+            } else if (dataSupport === type) {
                 reg = defReg;
                 console.log("else if");
             } else {
@@ -161,8 +169,8 @@ var Validate = (function (config) {
                 console.log("else");
             }
 
-            console.log(reg);
-
+            console.log("Reg: " + reg);
+            console.log("Supported: " + support);
             // Bei input Feldern 
             if ((tag === "INPUT") && reg) {
                 field = doc.querySelector("#" + id);
@@ -171,7 +179,7 @@ var Validate = (function (config) {
 
                 // Wird das inputfeld unterstützt
                 // Untersteht es der automatischen Validierung
-                // Ist ein pattern Wert gesetzt
+                // Ist ein pattern Wert gesetzt               
                 if (support && field.willValidate && pattern) {
 
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
