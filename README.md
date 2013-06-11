@@ -7,6 +7,7 @@ A Library to Validate your forms.
 #### JavaScript 
 ```javascript
 Validate({  
+	// form: id of the form in this case
     form: "#form", 
 	// These fields will be validated
     inputs: {
@@ -24,18 +25,19 @@ The **id** and the **data-support** Attribut are required. The value of the **da
 	data-support="tel"
 	id="tel"
 	type="tel" />
-	<!-- Error Message shows up in the next Element, in this case the span-->
-	<span></span>
+	<!-- Error Message shows up in the span Element, which will be automatically appended into the DOM-->
+	<!-- For Custom Styling use the class info -->
 </form>
 ```
 
-### Practical
+### More Advanced Example
 #### JavaScript
 ```javascript
 Validate({  
     form: "#form", 
     inputs: {  
-        tel: /^[\+\(\)\s0-9]+$/
+		vorname: /^[a-z\s]+$/i,
+        tel: /^[\+\(\)\s0-9]+$/,
     }
 });
 ```
@@ -49,20 +51,33 @@ Validate({
 	type="tel"
 	title="Only Numbers, +, and ()"
 	required />
-	<!-- Error Message shows up in the next Element , in this case the span-->
-	<span title="Only Numbers, +, and ()"></span>
 </form>
 ```
 ## Styling
 ### Errorbox
 There are 3 classes available for styling the error messages.
-The Element will be appended to the next Element after the input.
-
-**Position and Border:** .errorBox   
+The Element will be appended to info class span.  
+**Position:** .info 
+**Box Styling:** .errorBox   
 **Textcolors:** .errorTrue & .errorFalse
 
-####Example Styling
+####Example Styling @validate.css
 ```css
+/*
+------------------------------------------------- Info Hover
+*/
+.info {
+    cursor: help;
+    position: relative;
+    display: inline-block;
+    background: #fff url(../img/info.png) left 0 no-repeat;
+    min-width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+/*
+------------------------------------------------- Error Text
+*/
 .errorTrue {
 	color: limegreen;
 }
@@ -71,6 +86,9 @@ The Element will be appended to the next Element after the input.
 	color: red;
 }
 
+/*
+------------------------------------------------- Error Box
+*/
 .errorBox {
 	font-size: 0.625em;
 	border: 1px solid #d0d0d0;
