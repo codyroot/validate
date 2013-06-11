@@ -36,10 +36,9 @@
         display: inline-block;
     }
 
-    #form .info {
+    .info {
         width: 59%;
-        display: inline-block;
-        margin: 0;
+        _margin: 0;
         vertical-align: middle;
     }
 

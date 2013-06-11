@@ -59,10 +59,10 @@ var Validate = (function (config) {
         },
 
         // insert span for the error message
-        insertElement = function (e) {
+        insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
                 if (!(fields[i].type == "submit")) {
-                    fields[i].insertAdjacentHTML("afterend", "<span></span>");
+                    fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
                 }
             }
         },
@@ -186,8 +186,6 @@ var Validate = (function (config) {
             alert(countFields + " || " + validFields);
         };
 
-    // Events
-    
     // Cross Browser Events
     eventUtility.addEvent(form, "keyup", event);
     eventUtility.addEvent(form, "change", event);
@@ -197,4 +195,6 @@ var Validate = (function (config) {
 
     // Senden Button
     eventUtility.addEvent(form, "submit", send);
+
+    form.reset();
 });
