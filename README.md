@@ -56,8 +56,8 @@ Validate({
 ## Styling
 ### Errorbox
 There are 3 classes available for styling the error messages.
-The Element will be appended to info class span.  
-**Position:** .info 
+The Element will be appended into the info span.  
+**Position:** .info   
 **Box Styling:** .errorBox   
 **Textcolors:** .errorTrue & .errorFalse
 
