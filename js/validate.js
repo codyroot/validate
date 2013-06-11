@@ -43,7 +43,7 @@ var Validate = (function (config) {
                     event.returnValue = false;
                 }
             }
-    },
+        },
 
     // Feature Detection
         supportType = function (type) {
@@ -150,9 +150,6 @@ var Validate = (function (config) {
             }
         };
 
-    // Formular beim Neuladen Zurücksetzen
-    form.reset();
-
     // Cross Browser Events
     eventUtility.addEvent(form, "keyup", event);
     eventUtility.addEvent(form, "change", event);
@@ -169,7 +166,6 @@ var Validate = (function (config) {
 
         // Vergleich valide Felder mit Anzahl der zu valid. Felder
         if (countFields !== validFields) {
-            // e.preventDefault();
             eventUtility.preventDefault(evt);
             alert("Formular nicht abgeschickt");
         }
