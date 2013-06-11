@@ -1,12 +1,15 @@
 var Validate = (function (config) {
     "use strict";
 
-    var doc = document, 
-        win = window, 
-        con = config, 
-        input = (con.inputs) ? con.inputs : false, 
-        form = doc.querySelector(con.form), 
-        validFields = doc.querySelectorAll(con.form + " .true").length, 
+    var doc = document,
+        con = config,
+        // IDs der zu validierenden Inputs mit den RegExp
+        input = (con.inputs) ? con.inputs : false,
+        // ID des Formulars
+        form = doc.querySelector(con.form),
+        // Anzahl der korrekt ausgefüllten Felder
+        validFields = doc.querySelectorAll(con.form + " .true").length,
+        // RegExp aus dem Objekt + DOM Zugriff auf die des inputs + input Value Länge
         reg, field, valueLen,
         
         // Default RegExp Werte
@@ -17,6 +20,7 @@ var Validate = (function (config) {
             number: /^[0-9]+$/
         },
 
+        // Cross Browser Events
         eventUtility = {
             addEvent : function(el, type, fn) {
                 if (el.addEventListener) {
@@ -64,7 +68,7 @@ var Validate = (function (config) {
             return el;
         },
 
-    // Date Attributt
+    // Datenattribut bestimmen
         dataAttribut = function (el, att) {
             if (el.dataset) {
                 el = el.dataset[att];
@@ -74,7 +78,7 @@ var Validate = (function (config) {
             return el;
         },
 
-    // Length valid fields
+    // Länge der zu überprüfenden Felder aus dem Objekt auslesen
         objLength = function (obj) {
             var size = 0, key;
             for (key in obj) {
@@ -85,10 +89,10 @@ var Validate = (function (config) {
             return size;
         },
 
-    // Length all Fields
+    // Länge der zu überprüfenden Felder
         countFields = objLength(input),
 
-    // Message
+    // Nachricht ob Eingabe korrekt ist oder nicht
         insertMsg = function (el, bool) {
             var nextElement = nextSibling(el),
                 title = (el.title) ? el.title : "Incorrect input!",
@@ -98,11 +102,12 @@ var Validate = (function (config) {
 
             if (bool) {
                 el.setAttribute("class", "true");
-                nextElement.innerHTML = "<span class='errorBox errorTrue'>✔ Correct Input!</span>"; //
+                nextElement.innerHTML = "<span class='errorBox errorTrue'>✔ Correct Input!</span>";
             } else {
                 el.setAttribute("class", "false");
                 nextElement.innerHTML = "<span class='errorBox errorFalse' title='asda'>" + title + "</span>";
             }
+            // Positionswert
             nextElement.firstChild.style.top = -pos() + "px";
         },
 
@@ -115,19 +120,20 @@ var Validate = (function (config) {
                 pattern = el.pattern, // RegExp im input
                 support = supportType(dataAttribut(el, "support"));
 
-            // Reg Exp aus dem Objekt
-            reg = (input[id]) ? input[id] : defaultReg[dataAttribut(el,"support")]
+            // Reg Exp aus dem Objekt oder den default Werten
+            reg = (input[id]) ? input[id] : defaultReg[dataAttribut(el, "support")];
 
             console.log(reg);
-            console.log(countFields + "||" + validFields);
 
-            // Bei input Feldern
+            // Bei input Feldern 
             if ((tag === "INPUT") && reg) {
                 field = doc.querySelector("#" + id);
                 // required oder fail
-                valueLen = (field.value.length > 0); // nicht verwendet aktuell
+                valueLen = (field.value.length > 0); // off
 
-                // Wird das inputfeld unterstützt und untersteht es der automatischen Validierung
+                // Wird das inputfeld unterstützt
+                // Untersteht es der automatischen Validierung
+                // Ist ein pattern Wert gesetzt
                 if (support && field.willValidate && pattern) {
 
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
@@ -138,14 +144,14 @@ var Validate = (function (config) {
                     }
                     console.log("Supported");
 
-                    // keine Unterstützung des inputs
+                    // keine Unterstützung oben aufgeführter Vorausetzungen
                 } else {
                     if (field.value.match(reg)) {
                         insertMsg(el, true);
                     } else {
                         insertMsg(el, false);
                     }
-                    console.log("Browser untertstützt das Feld und/oder die automat. Validierung nicht!");
+                    console.log("Browser unterstützt das Feld,die automat. Validierung oder kein pattern Attribut ist gesetzt");
                 }
             }
         };
@@ -156,7 +162,6 @@ var Validate = (function (config) {
 
     // Senden Button
     eventUtility.addEvent(form, "submit", function (evt) {
-        // form.addEventListener("submit", function (e) {
 
         // Aufruf nochmals, da querySel. keine Live NodeLists zurückgeben
         validFields = doc.querySelectorAll(con.form + " .true").length;
