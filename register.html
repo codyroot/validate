@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Register</title>
+    <title>Validate.js Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" />
     <link href="style/reset.css" rel="stylesheet" />
@@ -13,6 +13,7 @@
 <body>
     <div id="size"></div>
     <div class="wrapper">
+        <h1>Validate.js</h1>
         <form action="#" method="get" id="form">
             <fieldset>
                 <legend>Register</legend>
@@ -22,15 +23,9 @@
                     <legend>Personal</legend>
 
                     <div>
+                        <h2>This Field has the minimum of attributes</h2>
                         <label for="vorname" class="required">Firstname</label>
                         <input data-support="text" id="vorname" type="text" />
-                        <span class="info" title="Only Letters!"></span>
-                    </div>
-
-                    <div>
-                        <label for="nachname" class="required">Lastname</label>
-                        <input pattern="[a-zA-Z\s]+" data-support="text" id="nachname" name="nachname" type="text"
-                            placeholder="Mustermann" title="Only Letters!" required />
                         <span class="info" title="Only Letters!"></span>
                     </div>
 
@@ -39,22 +34,13 @@
                 <fieldset class="right clearfix">
                     <legend>Contact</legend>
 
-                    <div>
-                        <label for="tel" class="required">Phonenumber</label>
-                        <input pattern="[\+\(\)\s0-9]+" data-support="tel" id="tel" name="tel" type="tel"
-                            placeholder="+49 176 123 456" title="Only Numbers, +, and ()" required />
-                        <span class="info"
-                            title="Only Numbers, +, and ()"></span>
+                   <div>
+                        <h2>This Field has the optimum of attributes</h2>
+                        <label for="nachname" class="required">Lastname</label>
+                        <input pattern="[a-zA-Z\s]+" data-support="text" id="nachname" name="nachname" type="text"
+                            placeholder="Mustermann" title="Only Letters!" required />
+                        <span class="info" title="Only Letters!"></span>
                     </div>
-
-                    <div>
-                        <label for="email" class="required">E-Mail</label>
-                        <input data-support="email" id="email" name="email" type="email" placeholder="user@example.org"
-                            title="user@example.org" required />
-                        <span class="info"
-                            title="user@example.org"></span>
-                    </div>
-
                 </fieldset>
 
                 <input type="submit" value="Send" id="senden" />

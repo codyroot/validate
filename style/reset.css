@@ -26,3 +26,10 @@
 .clearfix:after {
     clear: both;
 }
+
+h1 {
+    font-size: 2em;
+    text-align: center;
+    border-bottom: 1px solid black;
+    line-height: 2em;
+}
