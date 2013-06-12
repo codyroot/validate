@@ -161,10 +161,10 @@ var Validate = (function (config) {
                 id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
                 pattern = el.pattern, // RegExp im input
                 dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
-                support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype
-                inputId = input[id], // Custom RegExp
+                support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype                
                 defReg = defaultReg[dataAttribut(el, "reg")], // Default RegExp type=support
-                replacePattern = inputId.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, "");
+                inputId = (input[id]) ? input[id] : defReg, // Custom RegExp oder Autoren
+                replacePattern = (inputId) ? inputId.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, "") : defReg;
 
             // Wert im input nicht überschreiben wenn gesetzt
             // Custom RegExp überschreibt den Autoren RegExp des pattern Attributes
