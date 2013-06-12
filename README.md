@@ -1,4 +1,4 @@
-# Validate.js
+# Validate.js - BETA v0.1
 
 A Library to Validate your forms.
 
