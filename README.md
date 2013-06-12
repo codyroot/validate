@@ -133,3 +133,6 @@ Mozilla Firefox 3.6+
 Google Chrome 1+  
 Safari 5+  
 Opera 9.6+  
+
+##Bugtracker
+Number Fields
