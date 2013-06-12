@@ -57,19 +57,6 @@ var Validate = (function (config) {
             }
         },
 
-    // Feature Detection
-        supportType = function (type) {
-            // if (/a|b|c/.test(val))
-            var i = document.createElement("input");
-            i.setAttribute("type", type);
-            return i.type === type;
-        },
-
-    // Pattern Attribut bereinigen
-        clearPattern = function (el){
-            return el.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "");
-        },
-
     // insert span for the error message
         insertElement = function () {
             var aa = [];
@@ -94,6 +81,19 @@ var Validate = (function (config) {
                 }
             }
             console.log(aa);
+        },
+
+    // Feature Detection
+        supportType = function (type) {
+            // if (/a|b|c/.test(val))
+            var i = document.createElement("input");
+            i.setAttribute("type", type);
+            return i.type === type;
+        },
+
+    // Pattern Attribut bereinigen
+        clearPattern = function (el){
+            return el.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "");
         },
 
     // IE Fallback for nextElementSibling
@@ -149,6 +149,7 @@ var Validate = (function (config) {
                 el.setAttribute("class", "false");
                 nextElement.innerHTML = "<span class='errorBox errorFalse'>" + title + "</span>";
             }
+            console.log("><>>DOM Access");
             // Positionswert
             nextElement.firstChild.style.top = -pos() + "px";
         },
@@ -159,22 +160,23 @@ var Validate = (function (config) {
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
                 id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
                 pattern = el.pattern, // RegExp im input
-                type = el.type, // type of the id
                 dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
                 support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype
-                defReg = defaultReg[dataAttribut(el, "reg")]; // Default RegExp type=support
+                inputId = input[id], // Custom RegExp
+                defReg = defaultReg[dataAttribut(el, "reg")], // Default RegExp type=support
+                replacePattern = inputId.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, "");
 
             // Wert im input nicht überschreiben wenn gesetzt
             // Custom RegExp überschreibt den Autoren RegExp des pattern Attributes
-            reg = (input[id]) ? input[id] : defReg;
+            reg = (inputId) ? inputId : defReg;
 
             // Reg Exp aus dem Objekt oder den default Werten
-            if (input[id]) {                       
-                el.setAttribute("pattern", input[id].toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, ""));   
-                console.log("pattern überschrieben");
+            if (replacePattern !== pattern && inputId) {                    
+                el.setAttribute("pattern", replacePattern);   
+                console.log("DOM############pattern überschrieben");
             }
 
-            console.log(defReg);
+            console.log(inputId);
             console.log("Reg: " + reg);
             console.log("Supported: " + support);
 
@@ -185,13 +187,18 @@ var Validate = (function (config) {
                 // Wird das inputfeld unterstützt
                 // Untersteht es der automatischen Validierung
                 // Ist ein pattern Wert gesetzt               
-                if (support && field.willValidate && pattern) {
+                if (field.willValidate && support && pattern) {
                     // el.setAttribute("pattern", input[id].toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, ""));
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
                     if (field.checkValidity()) {
-                        insertMsg(el, true);
+                        // Nur DOM Zugriff bei Veränderung
+                        if(!el.classList.contains('true')) {
+                            insertMsg(el, true);
+                        }
                     } else {
-                        insertMsg(el, false);
+                        if(!el.classList.contains("false")) {
+                            insertMsg(el, false);
+                        }                        
                     }
                     console.log("checkValidity()");
                     // keine Unterstützung oben aufgeführter Vorausetzungen
