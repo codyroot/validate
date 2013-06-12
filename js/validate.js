@@ -1,6 +1,7 @@
 var Validate = (function (config) {
     "use strict";
 
+// Variablen
     var doc = document,
         con = config,
         // IDs der zu validierenden Inputs mit den RegExp
@@ -12,21 +13,22 @@ var Validate = (function (config) {
         // Anzahl der korrekt ausgefüllten Felder
         validFields = doc.querySelectorAll(con.form + " .true").length,
         // RegExp aus dem Objekt + DOM Zugriff auf die des inputs + input Value Länge
-        reg, field, valueLen,
+        reg, field,
 
-        // Default RegExp Werte
+    // Default RegExp Werte
         defaultReg = {
-            text: /^[A-Za-z\s]+$/,
-            tel: /^[\+\(\)\s0-9]+$/,
+            // Standard RegExp
+            text: /^[a-z\s]+$/i,
+            tel: /^[\+\(\)\s\-0-9]+$/,
             email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i,
             number: /^[0-9]+$/,
             // Autoren RegExp in der data-reg
             postcodeGer: /^[0-9]{5}$/,
             street: /[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,
-            fullname: /[a-zA-ZäöüÄÖÜ]+ [a-zA-ZäöüÄÖÜ]+/
+            fullname: /[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+/
         },
 
-        // Cross Browser Events
+    // Cross Browser Events
         eventUtility = {
             addEvent: function (el, type, fn) {
                 if (el.addEventListener) {
@@ -55,7 +57,7 @@ var Validate = (function (config) {
             }
         },
 
-        // Feature Detection
+    // Feature Detection
         supportType = function (type) {
             // if (/a|b|c/.test(val))
             var i = document.createElement("input");
@@ -63,11 +65,17 @@ var Validate = (function (config) {
             return i.type === type;
         },
 
-        // insert span for the error message
+    // Pattern Attribut bereinigen
+        clearPattern = function (el){
+            return el.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "");
+        },
+
+    // insert span for the error message
         insertElement = function () {
+            var aa = [];
             for (var i = 0; i < fields.length; i++) {
                 if (fields[i].type !== "submit") {
-                    if (dataAttribut(fields[i], "reg") && fields[i].type !== "number") {
+                    if (fields[i].type !== "number" && dataAttribut(fields[i], "reg")) {
                         console.log("Felder Number FF");
                         // Konvertieren von RegExp zu Strings
                         var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
@@ -75,13 +83,17 @@ var Validate = (function (config) {
                         fields[i].setAttribute("pattern", setPattern
                         .replace(/\//g, "")
                         .replace(/\^/g, "")
+                        .replace(/i/, "")
                         .replace(/\$/, ""));
                     }
                     // Append span.info
                     fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
                     fields[i].setAttribute("data-support", fields[i].type);
+
+                    aa.push(dataAttribut(fields[i], "support"));
                 }
             }
+            console.log(aa);
         },
 
     // IE Fallback for nextElementSibling
@@ -130,7 +142,6 @@ var Validate = (function (config) {
                 pos = function () {
                     return nextElement.firstChild.offsetHeight / 2 - nextElement.offsetHeight / 2;
                 };
-
             if (bool) {
                 el.setAttribute("class", "true");
                 nextElement.innerHTML = "<span class='errorBox errorTrue'>✔ Correct Input!</span>";
@@ -144,52 +155,45 @@ var Validate = (function (config) {
 
     // Event Delegation
         event = function (evt) {
-
             var el = eventUtility.getTarget(evt), // Element HTML
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
                 id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
                 pattern = el.pattern, // RegExp im input
                 type = el.type, // type of the id
                 dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
-                support = supportType(dataSupport), // Element Supported true/false
-                defReg = defaultReg[dataSupport], // Default RegExp type=support
-                defReg2 = defaultReg[dataAttribut(el, "reg")]; // Default RegExp Autor
+                support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype
+                defReg = defaultReg[dataAttribut(el, "reg")]; // Default RegExp type=support
+
+            // Wert im input nicht überschreiben wenn gesetzt
+            // Custom RegExp überschreibt den Autoren RegExp des pattern Attributes
+            reg = (input[id]) ? input[id] : defReg;
 
             // Reg Exp aus dem Objekt oder den default Werten
-            //reg = (input[id]) ? input[id] : defaultReg[dataAttribut(el, "support")];
-
-            if (input[id]) {
-                reg = input[id];
-                console.log("if");
-            } else if (dataSupport === type) {
-                reg = defReg;
-                console.log("else if");
-            } else {
-                reg = defReg2;
-                console.log("else");
+            if (input[id]) {                       
+                el.setAttribute("pattern", input[id].toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, ""));   
+                console.log("pattern überschrieben");
             }
 
+            console.log(defReg);
             console.log("Reg: " + reg);
             console.log("Supported: " + support);
+
             // Bei input Feldern 
             if ((tag === "INPUT") && reg) {
                 field = doc.querySelector("#" + id);
-                // required oder fail
-                valueLen = (field.value.length > 0); // off
 
                 // Wird das inputfeld unterstützt
                 // Untersteht es der automatischen Validierung
                 // Ist ein pattern Wert gesetzt               
                 if (support && field.willValidate && pattern) {
-
+                    // el.setAttribute("pattern", input[id].toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, ""));
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
                     if (field.checkValidity()) {
                         insertMsg(el, true);
                     } else {
                         insertMsg(el, false);
                     }
-                    console.log("Supported");
-
+                    console.log("checkValidity()");
                     // keine Unterstützung oben aufgeführter Vorausetzungen
                 } else {
                     if (field.value.match(reg)) {
@@ -197,14 +201,13 @@ var Validate = (function (config) {
                     } else {
                         insertMsg(el, false);
                     }
-                    console.log("Browser unterstützt das Feld,die automat. Validierung oder kein pattern Attribut ist gesetzt");
+                    console.log("match()");
                 }
             }
         },
 
         // Send
         send = function (evt) {
-
             // Aufruf nochmals, da querySel. keine Live NodeLists zurückgeben
             validFields = doc.querySelectorAll(con.form + " .true").length;
             console.dir(validFields);
@@ -228,5 +231,6 @@ var Validate = (function (config) {
     // Senden Button
     eventUtility.addEvent(form, "submit", send);
 
+    // Reset Formular
     form.reset();
 });
