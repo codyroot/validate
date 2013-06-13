@@ -23,7 +23,7 @@
                     <div>
                         <h2>This Field has the minimum of attributes!</h2>
                         <label for="vorname" class="required">Firstname</label>
-                        <input id="vorname" type="email" />
+                        <input id="vorname" type="text" data-reg="text" />
                     </div>
                 </fieldset>
 
@@ -32,8 +32,8 @@
                     <div>
                         <h2>This Field has the optimum of attributes!</h2>
                         <label for="tel" class="required">Phone</label>
-                        <input pattern="[\+\(\)\s0-9]+" id="tel" name="tel" type="tel"
-                            placeholder="+49 176 123 456" title="Valid Chars: Numbers, +, ()" required />
+                        <input id="tel" name="tel" type="tel" data-reg="tel"
+                            placeholder="+49 176 123 456" title="Valid Chars: Numbers, +, ()" />
                     </div>
                 </fieldset>
                 <input type="submit" value="Send" id="senden" />
@@ -45,14 +45,15 @@
     <script src="js/validate.js"></script>
     <script>
         // Call
-        var form = Validate({
-            form: "#form", // get the form
-            // Valid field: id: RegExp
-            inputs: {
-                vorname: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i,
-                tel: /^[\+\(\)\s0-9]+$/
-            }
-        });
+        //var form = Validate({
+        //    form: "#form", // get the form
+        //    // Valid field: id: RegExp
+        //    inputs: {
+        //        vorname: /^[a-z]+$/,
+        //        tel: /^[\+\(\)\s0-9]+$/
+        //    }
+        //});
+        var g = Validate("#form");
     </script>
 </body>
 </html>

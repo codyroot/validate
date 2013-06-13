@@ -4,14 +4,18 @@ var Validate = (function (config) {
 // Variablen
     var doc = document,
         con = config,
-        // IDs der zu validierenden Inputs mit den RegExp
+        // Typ des Paramaters ermitteln
+        arg = arguments[0],
+        // Ist das Argument ein String
+        isString = typeof arg === "string",
+        // ID des Formulars im String oder Objekt 
+        form = (isString) ? doc.querySelector(arg) : doc.querySelector(con.form),
+        // IDs der zu validierenden Inputs mit den RegExp --> für Custom Reg
         input = (con.inputs) ? con.inputs : false,
-        // ID des Formulars
-        form = doc.querySelector(con.form),
-        // all inputs
-        fields = doc.querySelectorAll(con.form + " input"),
+        // Alle Inputfelder im Formular
+        fields = (isString) ? doc.querySelectorAll(arg + " input") : input,
         // Anzahl der korrekt ausgefüllten Felder
-        validFields = doc.querySelectorAll(con.form + " .true").length,
+        validFields = (isString) ? doc.querySelectorAll(arg + ".true").length : doc.querySelectorAll(con.form + " .true").length,
         // RegExp aus dem Objekt + DOM Zugriff auf die des inputs + input Value Länge
         reg, field,
 
@@ -59,7 +63,6 @@ var Validate = (function (config) {
 
     // insert span for the error message
         insertElement = function () {
-            var aa = [];
             for (var i = 0; i < fields.length; i++) {
                 if (fields[i].type !== "submit") {
                     if (fields[i].type !== "number" && dataAttribut(fields[i], "reg")) {
@@ -76,11 +79,8 @@ var Validate = (function (config) {
                     // Append span.info
                     fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
                     fields[i].setAttribute("data-support", fields[i].type);
-
-                    aa.push(dataAttribut(fields[i], "support"));
                 }
             }
-            console.log(aa);
         },
 
     // Feature Detection
@@ -123,17 +123,27 @@ var Validate = (function (config) {
 
     // Länge der zu überprüfenden Felder aus dem Objekt auslesen
         objLength = function (obj) {
-            var size = 0, key;
-            for (key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    size++;
+            var size = 0,
+                arg = arguments[0],
+                key;
+            if (arg.length) {
+                for (var i = 0; i < arg.length; i++) {
+                    if (arg[i].hasAttribute("data-reg")) {
+                        size++;
+                    }
+                }
+            } else {
+                for (key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        size++;
+                    }
                 }
             }
             return size;
         },
 
     // Länge der zu überprüfenden Felder
-        countFields = objLength(input),
+        countFields = objLength(fields),
 
     // Nachricht ob Eingabe korrekt ist oder nicht
         insertMsg = function (el, bool) {
@@ -161,7 +171,7 @@ var Validate = (function (config) {
                 id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
                 pattern = el.pattern, // RegExp im input
                 dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
-                support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype                
+                support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype
                 defReg = defaultReg[dataAttribut(el, "reg")], // Default RegExp type=support
                 inputId = (input[id]) ? input[id] : defReg, // Custom RegExp oder Autoren
                 replacePattern = (inputId) ? inputId.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, "") : defReg;
@@ -219,11 +229,20 @@ var Validate = (function (config) {
             validFields = doc.querySelectorAll(con.form + " .true").length;
             console.dir(validFields);
 
+            // Pflichtfelder
+            for (var i = 0; i < fields.length; i++) {
+                if (fields[i].value < 1) {
+                    eventUtility.preventDefault(evt);
+                    console.log("a");
+                }
+            };
+
             // Vergleich valide Felder mit Anzahl der zu valid. Felder
             if (countFields !== validFields) {
                 eventUtility.preventDefault(evt);
                 alert("Formular nicht abgeschickt");
             }
+
             console.log(countFields + " || " + validFields);
             alert(countFields + " || " + validFields);
         };
