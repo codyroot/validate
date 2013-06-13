@@ -28,14 +28,14 @@ In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche a
 	<!-- Zum Stylen steht die Klasse info bereit -->
 </form>
 ```
-## Validierungswerte für data-reg
-text: /^[a-z\s]+$/i,  
-tel: /^[\+\(\)\s\-0-9]+$/,  
-email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i,  
-number: /^[0-9]+$/,  
-postcodeGer: /^[0-9]{5}$/,  
-street: /^[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,  
-fullname: /[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+/  
+## Vorgefertigte Werte für data-reg
+**text**: Nur Buchstaben,  
+**tel**: Zahlen, +-Zeichen, Klammern  
+**email**: user@example.org,  
+**number**: Zahlen/,  
+**postcodeGer**: Fünfstellige Zahl,  
+**street**: Anfangswerte sind Buchstaben. Am Ende folgt eine Zahl + optionaler Buchstabe  
+**fullname**: Buchstaben und Leerzeichen  
 ## Verwendung - Option 2
 Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
 **1** Das jeweilige Formularfeld muss eine id zugewiesen werden.  
