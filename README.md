@@ -1,6 +1,6 @@
 # Validate.js - BETA v0.1
 
-Validate.js ist eine kleine Bibliothek zum validieren von Formularen.
+Validate.js ist eine kleine Bibliothek zum Validieren von Formularen.
 Dabei kommt die HTML5-Validerungs API und eine Fallbacklösung für ältere Browser zum Einsatz.
 
 ## Verwendung - Option 1
@@ -29,13 +29,13 @@ In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche a
 </form>
 ```
 ## Vorgefertigte Werte für data-reg
-**text**: Nur Buchstaben,  
+**text**: Buchstaben,  
 **tel**: Zahlen, +-Zeichen, Klammern  
 **email**: user@example.org,  
-**number**: Zahlen/,  
+**number**: Zahlen,  
 **postcodeGer**: Fünfstellige Zahl,  
 **street**: Anfangswerte sind Buchstaben. Am Ende folgt eine Zahl + optionaler Buchstabe  
-**fullname**: Buchstaben und Leerzeichen  
+**fullname**: 2 Buchstabenfolgen die mit einem Leerzeichen getrennt sind  
 ## Verwendung - Option 2
 Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
 **1** Das jeweilige Formularfeld muss eine id zugewiesen werden.  
