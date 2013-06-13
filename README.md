@@ -6,7 +6,7 @@ Dabei kommt die HTML5-Validerungs API und eine Fallbacklösung für ältere Browser
 ## Verwendung - Option 1
 Die Verwendung von Validate.js benötigt folgende Schritte:  
 **1:** Die Datei validate.js am Ende des Body Elementes eingebunden werden.  
-**2:** Das Form Element benötigt ein id Attribut.
+**2:** Das Form Element benötigt ein id Attribut.  
 **3:** In das zu validierende Formularfeld muss das Attribut **data-reg** mit dem dazugehörigen Validierungswert notiert werden.  
 **4:** Die Funktion Validate(id) muss in einen seperaten script Element aufgerufen werden. Als Parameter muss die id des Formularelements eingetragen werden.  
 *Hinweis*: Ist das data-reg Attribut gesetzt, wird das Formularfeld automatisch zu einem Pflichtfeld.  
@@ -28,7 +28,14 @@ In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche a
 	<!-- Zum Stylen steht die Klasse info bereit -->
 </form>
 ```
-
+## Validierungswerte für data-reg
+text: /^[a-z\s]+$/i,  
+tel: /^[\+\(\)\s\-0-9]+$/,  
+email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i,  
+number: /^[0-9]+$/,  
+postcodeGer: /^[0-9]{5}$/,  
+street: /^[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,  
+fullname: /[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+/  
 ## Verwendung - Option 2
 Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
 **1** Das jeweilige Formularfeld muss eine id zugewiesen werden.  
