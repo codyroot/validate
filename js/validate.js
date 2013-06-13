@@ -11,14 +11,12 @@ var Validate = (function (config) {
         // ID des Formulars im String oder Objekt 
         form = (isString) ? doc.querySelector(arg) : doc.querySelector(con.form),
         // Alle Inputfelder im Formular
-        fields = (isString) ? doc.querySelectorAll(config + " input") : doc.querySelectorAll(con.form + " input"),
+        fields = (isString) ? doc.querySelectorAll(con + " input") : doc.querySelectorAll(con.form + " input"),
         // Anzahl der korrekt ausgefüllten Felder
         validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
         // IDs der zu validierenden Inputs mit den RegExp --> für Custom Reg
         input = (con.inputs) ? con.inputs : false,
-        // RegExp aus dem Objekt
-        reg,
-
+ 
     // Default RegExp Werte
         defaultReg = {
             // Standard RegExp
@@ -64,7 +62,6 @@ var Validate = (function (config) {
     // insert span for the error message
         insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
-                console.log(fields[i]);
                 if (fields[i].type !== "submit") {
                     if (fields[i].type !== "number" && dataAttribut(fields[i], "reg")) {
                         // Konvertieren von RegExp zu Strings
@@ -124,10 +121,14 @@ var Validate = (function (config) {
     // Länge der zu überprüfenden Felder aus dem Objekt auslesen
         objLength = function (obj) {
             var size = 0,
-                arg = arguments[0],
+                // argumente in array umwandeln
+                arg = Array.prototype.slice.call(arguments)[0],
+                // o = Object.prototype.toString.call(arguments[0]),
+                typeOfArg = (NodeList) ? arg instanceof NodeList : arg instanceof StaticNodeList,
                 key;
-            if (arg.length) {
-                for (var i = 0; i < arg.length; i++) {
+
+            if (typeOfArg) {
+                for (var i = 0; i < arg[i].length; i++) {
                     if (arg[i].hasAttribute("data-reg")) {
                         size++;
                     }
@@ -143,7 +144,7 @@ var Validate = (function (config) {
         },
 
     // Länge der zu überprüfenden Felder
-        countFields = objLength(fields),
+        countFields = (input) ? objLength(input) : objLength(fields),
 
     // Nachricht ob Eingabe korrekt ist oder nicht
         insertMsg = function (el, bool) {
@@ -159,7 +160,6 @@ var Validate = (function (config) {
                 el.setAttribute("class", "false");
                 nextElement.innerHTML = "<span class='errorBox errorFalse'>" + title + "</span>";
             }
-            console.log("><>>DOM Access");
             // Positionswert
             nextElement.firstChild.style.top = -pos() + "px";
         },
@@ -169,27 +169,21 @@ var Validate = (function (config) {
             var el = eventUtility.getTarget(evt), // Element HTML
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
                 id = (el.id) ? el.id : "", // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
-                pattern = el.pattern, // RegExp im input
                 dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
                 support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype
                 defReg = defaultReg[dataAttribut(el, "reg")], // Default RegExp type=support
                 inputId = (input[id]) ? input[id] : defReg, // Custom RegExp oder Autoren
-                replacePattern = (inputId) ? inputId.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, "") : defReg;
-
-            console.dir(inputId);
-
-            // Wert im input nicht überschreiben wenn gesetzt
-            // Custom RegExp überschreibt den Autoren RegExp des pattern Attributes
-            reg = (inputId) ? inputId : defReg;
+                replacePattern = (inputId) ? inputId.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, "") : defReg,
+                // Wert im input nicht überschreiben wenn gesetzt
+                // Custom RegExp überschreibt den Autoren RegExp des pattern Attributes
+                reg = (inputId) ? inputId : defReg,
+                pattern = el.pattern; // Ersetztes Pattern
 
             // Reg Exp aus dem Objekt oder den default Werten
-            if (replacePattern !== pattern && inputId) {                    
-                el.setAttribute("pattern", replacePattern);   
+            if (replacePattern !== pattern && inputId) {
+                el.setAttribute("pattern", replacePattern);
+                console.log("DOM Zugriff");
             }
-
-            console.log(inputId);
-            console.log("Reg: " + reg);
-            console.log("Supported: " + support);
 
             // Bei input Feldern 
             if ((tag === "INPUT") && reg) {
@@ -198,9 +192,10 @@ var Validate = (function (config) {
                 // Untersteht es der automatischen Validierung
                 // Ist ein pattern Wert gesetzt
                 if (el.willValidate && support && pattern) {
+                    console.log("checkValidity()");
                     // el.setAttribute("pattern", input[id].toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, ""));
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
-                    if (el.checkValidity()) {
+                    if (el.value > 0 && el.checkValidity()) {
                         // Nur DOM Zugriff bei Veränderung
                         if(!el.classList.contains('true')) {
                             insertMsg(el, true);
@@ -210,15 +205,14 @@ var Validate = (function (config) {
                             insertMsg(el, false);
                         }
                     }
-                    console.log("checkValidity()");
                     // keine Unterstützung oben aufgeführter Vorausetzungen
                 } else {
+                    console.log("match()");
                     if (el.value.match(reg)) {
                         insertMsg(el, true);
                     } else {
                         insertMsg(el, false);
                     }
-                    console.log("match()");
                 }
             }
         },

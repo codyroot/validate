@@ -29,20 +29,20 @@ In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche a
 </form>
 ```
 ## Vorgefertigte Werte für data-reg
-**text**: Buchstaben,  
-**tel**: Zahlen, +-Zeichen, Klammern  
+**text**: Buchstaben mit Leerzeichen  
+**tel**: Zahlen, +, ()  
 **email**: user@example.org,  
 **number**: Zahlen,  
 **postcodeGer**: Fünfstellige Zahl,  
 **street**: Anfangswerte sind Buchstaben. Am Ende folgt eine Zahl + optionaler Buchstabe  
-**fullname**: 2 Buchstabenfolgen die mit einem Leerzeichen getrennt sind  
+**fullname**: 2 Wörter, die mit einem Leerzeichen getrennt sind  
 ## Verwendung - Option 2
 Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
-**1** Das jeweilige Formularfeld muss eine id zugewiesen werden.  
+**1** Das jeweilige Formularfeld muss eine id erhalten.  
 **2** Die Funktion Validate(object) erwartet dabei ein JSON Objekt im Parameter.  
 **3** In die Eigenschaft **form** muss die id des Formulares eingetragen werden.  
-**4** Im **inputs** Objekt wird als Eigenschaftsname die id des zu validierenden Formularfeldes eingetragen.. 
-**4** Als Wert bekommt die Eigenschaft den eigenen Regulären Ausdruck übergeben.  
+**4** Im **inputs** Objekt wird als Eigenschaftsname die id des zu validierenden Formularfeldes eingetragen.  
+**4** Als Wert bekommt die Eigenschaft einen Regulären Ausdruck übergeben.  
 
 *Hinweis 1:* Im inputs Objekt können mehrere Eigenschaften eingegeben werden.  
 *Hinweis 2:* Die Nachricht im Fehlerfeld wird aus dem title Attribut des input Elementes generiert.  

@@ -23,7 +23,7 @@
                     <div>
                         <h2>This Field has the minimum of attributes!</h2>
                         <label for="postcode" class="required">Postcode</label>
-                        <input type="text" data-reg="postcodeGer" id="postcode"/>
+                        <input type="text" id="postcode" data-reg="postcodeGer" />
                     </div>
                 </fieldset>
 
@@ -32,7 +32,7 @@
                     <div>
                         <h2>This Field has the optimum of attributes!</h2>
                         <label for="tel" class="required">Phone</label>
-                        <input id="tel" name="tel" type="tel" data-reg="fullname"
+                        <input id="tel" name="tel" type="tel" 
                             placeholder="+49 176 123 456" title="Valid Chars: Numbers, +, ()" />
                     </div>
                 </fieldset>
@@ -44,16 +44,16 @@
     <!-- JavaScript Files @HTML5 -->
     <script src="js/validate.js"></script>
     <script>
-        // Call
-        //var form = Validate({
-        //    form: "#form", // get the form
-        //    // Valid field: id: RegExp
-        //    inputs: {
-        //        postcode: /^[a-z]+$/,
-        //        tel: /^[\+\(\)\s0-9]+$/
-        //    }
-        //});
-        var g = Validate("#form");
+         //Call
+        var form = Validate({
+            form: "#form", // get the form
+            // Valid field: id: RegExp
+            inputs: {
+                postcode: /^[a-z]+$/,
+                tel: /^[\+\(\)\s0-9]+$/
+            }
+        });
+        //var g = Validate("#form");
     </script>
 </body>
 </html>
