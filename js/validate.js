@@ -10,12 +10,12 @@ var Validate = (function (config) {
         isString = typeof arg === "string",
         // ID des Formulars im String oder Objekt 
         form = (isString) ? doc.querySelector(arg) : doc.querySelector(con.form),
-        // IDs der zu validierenden Inputs mit den RegExp --> für Custom Reg
-        input = (con.inputs) ? con.inputs : false,
         // Alle Inputfelder im Formular
-        fields = (isString) ? doc.querySelectorAll(arg + " input") : input,
+        fields = (isString) ? doc.querySelectorAll(config + " input") : doc.querySelectorAll(con.form + " input"),
         // Anzahl der korrekt ausgefüllten Felder
         validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
+        // IDs der zu validierenden Inputs mit den RegExp --> für Custom Reg
+        input = (con.inputs) ? con.inputs : false,
         // RegExp aus dem Objekt + DOM Zugriff auf die des inputs + input Value Länge
         reg, field,
 
@@ -64,9 +64,9 @@ var Validate = (function (config) {
     // insert span for the error message
         insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
+                console.log(fields[i]);
                 if (fields[i].type !== "submit") {
                     if (fields[i].type !== "number" && dataAttribut(fields[i], "reg")) {
-                        console.log("Felder Number FF");
                         // Konvertieren von RegExp zu Strings
                         var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
                         // Bestimmte zeichen aus dem Pattern Löschen
@@ -176,6 +176,8 @@ var Validate = (function (config) {
                 inputId = (input[id]) ? input[id] : defReg, // Custom RegExp oder Autoren
                 replacePattern = (inputId) ? inputId.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "").replace(/i/, "") : defReg;
 
+            console.dir(inputId);
+
             // Wert im input nicht überschreiben wenn gesetzt
             // Custom RegExp überschreibt den Autoren RegExp des pattern Attributes
             reg = (inputId) ? inputId : defReg;
@@ -183,7 +185,6 @@ var Validate = (function (config) {
             // Reg Exp aus dem Objekt oder den default Werten
             if (replacePattern !== pattern && inputId) {                    
                 el.setAttribute("pattern", replacePattern);   
-                console.log("DOM############pattern überschrieben");
             }
 
             console.log(inputId);
@@ -208,7 +209,7 @@ var Validate = (function (config) {
                     } else {
                         if(!el.classList.contains("false")) {
                             insertMsg(el, false);
-                        }                        
+                        }
                     }
                     console.log("checkValidity()");
                     // keine Unterstützung oben aufgeführter Vorausetzungen
