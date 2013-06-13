@@ -22,8 +22,8 @@
                     <legend>Personal</legend>
                     <div>
                         <h2>This Field has the minimum of attributes!</h2>
-                        <label for="vorname" class="required">Firstname</label>
-                        <input id="vorname" type="text" data-reg="text" />
+                        <label for="postcode" class="required">Postcode</label>
+                        <input type="text" data-reg="postcodeGer" id="postcode"/>
                     </div>
                 </fieldset>
 
@@ -45,15 +45,15 @@
     <script src="js/validate.js"></script>
     <script>
         // Call
-        //var form = Validate({
-        //    form: "#form", // get the form
-        //    // Valid field: id: RegExp
-        //    inputs: {
-        //        vorname: /^[a-z]+$/,
-        //        tel: /^[\+\(\)\s0-9]+$/
-        //    }
-        //});
-        var g = Validate("#form");
+        var form = Validate({
+            form: "#form", // get the form
+            // Valid field: id: RegExp
+            inputs: {
+                postcode: /^[a-z]+$/,
+                tel: /^[\+\(\)\s0-9]+$/
+            }
+        });
+        //var g = Validate("#form");
     </script>
 </body>
 </html>

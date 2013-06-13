@@ -16,8 +16,8 @@ var Validate = (function (config) {
         validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
         // IDs der zu validierenden Inputs mit den RegExp --> für Custom Reg
         input = (con.inputs) ? con.inputs : false,
-        // RegExp aus dem Objekt + DOM Zugriff auf die des inputs + input Value Länge
-        reg, field,
+        // RegExp aus dem Objekt
+        reg,
 
     // Default RegExp Werte
         defaultReg = {
@@ -28,7 +28,7 @@ var Validate = (function (config) {
             number: /^[0-9]+$/,
             // Autoren RegExp in der data-reg
             postcodeGer: /^[0-9]{5}$/,
-            street: /[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,
+            street: /^[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,
             fullname: /[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+/
         },
 
@@ -168,7 +168,7 @@ var Validate = (function (config) {
         event = function (evt) {
             var el = eventUtility.getTarget(evt), // Element HTML
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
-                id = el.id, // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
+                id = (el.id) ? el.id : "", // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
                 pattern = el.pattern, // RegExp im input
                 dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
                 support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype
@@ -193,15 +193,14 @@ var Validate = (function (config) {
 
             // Bei input Feldern 
             if ((tag === "INPUT") && reg) {
-                field = doc.querySelector("#" + id);
 
                 // Wird das inputfeld unterstützt
                 // Untersteht es der automatischen Validierung
-                // Ist ein pattern Wert gesetzt               
-                if (field.willValidate && support && pattern) {
+                // Ist ein pattern Wert gesetzt
+                if (el.willValidate && support && pattern) {
                     // el.setAttribute("pattern", input[id].toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, ""));
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
-                    if (field.checkValidity()) {
+                    if (el.checkValidity()) {
                         // Nur DOM Zugriff bei Veränderung
                         if(!el.classList.contains('true')) {
                             insertMsg(el, true);
@@ -214,7 +213,7 @@ var Validate = (function (config) {
                     console.log("checkValidity()");
                     // keine Unterstützung oben aufgeführter Vorausetzungen
                 } else {
-                    if (field.value.match(reg)) {
+                    if (el.value.match(reg)) {
                         insertMsg(el, true);
                     } else {
                         insertMsg(el, false);

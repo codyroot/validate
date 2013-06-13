@@ -1,67 +1,69 @@
 # Validate.js - BETA v0.1
 
-A Library to Validate your forms.
+Validate.js ist eine kleine Bibliothek zum validieren von Formularen.
+Dabei kommt die HTML5-Validerungs API und eine Fallbacklösung für ältere Browser zum Einsatz.
 
-## Usage
-### Minimal Example
-#### JavaScript 
+## Verwendung - Option 1
+Die Verwendung von Validate.js benötigt folgende Schritte:  
+**1:** Die Datei validate.js am Ende des Body Elementes eingebunden werden.  
+**2:** Das Form Element benötigt ein id Attribut.
+**3:** In das zu validierende Formularfeld muss das Attribut **data-reg** mit dem dazugehörigen Validierungswert notiert werden.  
+**4:** Die Funktion Validate(id) muss in einen seperaten script Element aufgerufen werden. Als Parameter muss die id des Formularelements eingetragen werden.  
+*Hinweis*: Ist das data-reg Attribut gesetzt, wird das Formularfeld automatisch zu einem Pflichtfeld.  
+*Optional*: Einbinden der validate.css, um das vorgefertigte Styling der Fehlerboxen zu verwenden.
+### JavaScript 
 ```javascript
-Validate({  
-	// form: id of the form in this case
-    form: "#form", 
-	// These fields will be validated
-    inputs: {
-	// id of the <input>: RegExp  
-        tel: false, // or add a custom RegExp  
-    }  
-});
+// Im Parameter muss per id Selektor, die **id** des Formulares übergeben werden.
+Validate("#form");
 ```
-
-#### HTML Requirements
-The **id** and the **data-support** Attribut are required. The value of the **data-support** must be equal as **the type value**.
+### HTML Requirements
+Mit der Angabe des **data-reg** Attributes im HTML wird festgelegt wie das Feld validiert werden soll.
+In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche aus genau 5 Zahlen besteht.
 ```html
 <form id="form">
 	<input
-	data-support="tel"
-	id="tel"
-	type="tel" />
-	<!-- Error Message shows up in the span Element, which will be automatically appended into the DOM-->
-	<!-- For Custom Styling use the class info -->
+	data-reg="postcodeGer"
+	type="text" />
+	<!-- Fehlerbox erscheint im span Element nach dem input, das span wird automatisch erzeugt -->
+	<!-- Zum Stylen steht die Klasse info bereit -->
 </form>
 ```
 
-### More Advanced Example
-#### JavaScript
+## Verwendung - Option 2
+Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
+**1** Das jeweilige Formularfeld muss eine id zugewiesen werden.  
+**2** Die Funktion Validate(object) erwartet dabei ein JSON Objekt im Parameter.  
+**3** In die Eigenschaft **form** muss die id des Formulares eingetragen werden.  
+**4** Im **inputs** Objekt wird als Eigenschaftsname die id des zu validierenden Formularfeldes eingetragen.. 
+**4** Als Wert bekommt die Eigenschaft den eigenen Regulären Ausdruck übergeben.  
+
+*Hinweis 1:* Im inputs Objekt können mehrere Eigenschaften eingegeben werden.  
+*Hinweis 2:* Die Nachricht im Fehlerfeld wird aus dem title Attribut des input Elementes generiert.  
+### JavaScript
 ```javascript
-Validate({  
+Validate({
+	// id des Formulares  
     form: "#form", 
-    inputs: {  
-		vorname: /^[a-z\s]+$/i,
+		// id: RegExp
         tel: /^[\+\(\)\s0-9]+$/,
+		street: /[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/
     }
 });
 ```
-####HTML
+###HTML
 ```html
 <form id="form">
-	<input pattern="[\+\(\)\s0-9]+"
-	data-support="tel"
-	id="tel"
-	name="tel"
-	type="tel"
-	title="Only Numbers, +, and ()"
-	required />
+	<input 	id="tel" type="tel" />
 </form>
 ```
 ## Styling
 ### Errorbox
-There are 3 classes available for styling the error messages.
-The Element will be appended into the info span.  
+Zum Styling der Fehlernachrichten stehen 3 Klassen zur Verfügung.
 **Position:** .info   
-**Box Styling:** .errorBox   
-**Textcolors:** .errorTrue & .errorFalse
+**Box:** .errorBox   
+**Text:** .errorTrue & .errorFalse
 
-####Example Styling @validate.css
+####Beispieldatei validate.css
 ```css
 /*
 ------------------------------------------------- Info Hover
