@@ -15,7 +15,7 @@ var Validate = (function (config) {
         // Alle Inputfelder im Formular
         fields = (isString) ? doc.querySelectorAll(arg + " input") : input,
         // Anzahl der korrekt ausgefüllten Felder
-        validFields = (isString) ? doc.querySelectorAll(arg + ".true").length : doc.querySelectorAll(con.form + " .true").length,
+        validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
         // RegExp aus dem Objekt + DOM Zugriff auf die des inputs + input Value Länge
         reg, field,
 
@@ -226,14 +226,13 @@ var Validate = (function (config) {
         // Send
         send = function (evt) {
             // Aufruf nochmals, da querySel. keine Live NodeLists zurückgeben
-            validFields = doc.querySelectorAll(con.form + " .true").length;
+            validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
             console.dir(validFields);
 
             // Pflichtfelder
             for (var i = 0; i < fields.length; i++) {
                 if (fields[i].value < 1) {
                     eventUtility.preventDefault(evt);
-                    console.log("a");
                 }
             };
 
