@@ -5,7 +5,7 @@ Dabei kommt die HTML5-Validerungs API und eine Fallbacklösung für ältere Browser
 
 ## Verwendung - Option 1
 Die Verwendung von Validate.js benötigt folgende Schritte:  
-**1:** Die Datei validate.js am Ende des Body Elementes eingebunden werden.  
+**1:** Die Datei validate.js wird am Ende des Body Elementes eingebunden werden.  
 **2:** Das Form Element benötigt ein id Attribut.  
 **3:** In das zu validierende Formularfeld muss das Attribut **data-reg** mit dem dazugehörigen Validierungswert notiert werden.  
 **4:** Die Funktion Validate(id) muss in einen seperaten script Element aufgerufen werden. Als Parameter muss die id des Formularelements eingetragen werden.  
@@ -38,11 +38,11 @@ In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche a
 **fullname**: 2 Wörter, die mit einem Leerzeichen getrennt sind  
 ## Verwendung - Option 2
 Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
-**1** Das jeweilige Formularfeld muss eine id erhalten.  
-**2** Die Funktion Validate(object) erwartet dabei ein JSON Objekt im Parameter.  
+**1** Das jeweilige **input**-Feld muss eine id erhalten.  
+**2** Die Funktion Validate(object) erwartet dabei ein JSON Objekt als Parameter.  
 **3** In die Eigenschaft **form** muss die id des Formulares eingetragen werden.  
-**4** Im **inputs** Objekt wird als Eigenschaftsname die id des zu validierenden Formularfeldes eingetragen.  
-**4** Als Wert bekommt die Eigenschaft einen Regulären Ausdruck übergeben.  
+**4** Im **inputs** Objekt wird als Eigenschaftsname die id des zu validierenden input-Feldes eingetragen.  
+**5** Als Wert bekommt die Eigenschaft einen Regulären Ausdruck übergeben.  
 
 *Hinweis 1:* Im inputs Objekt können mehrere Eigenschaften eingegeben werden.  
 *Hinweis 2:* Die Nachricht im Fehlerfeld wird aus dem title Attribut des input Elementes generiert.  
@@ -51,6 +51,7 @@ Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.
 Validate({
 	// id des Formulares  
     form: "#form", 
+	inputs: {
 		// id: RegExp
         tel: /^[\+\(\)\s0-9]+$/,
 		street: /[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/
