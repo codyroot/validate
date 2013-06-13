@@ -40,9 +40,9 @@ In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche a
 Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
 **1** Das jeweilige **input**-Feld muss eine id erhalten.  
 **2** Die Funktion Validate(object) erwartet dabei ein JSON Objekt als Parameter.  
-**3** In die Eigenschaft **form** muss die id des Formulares eingetragen werden.  
+**3** In die Eigenschaft **form** wird die id des Formulares eingetragen werden.  
 **4** Im **inputs** Objekt wird als Eigenschaftsname die id des zu validierenden input-Feldes eingetragen.  
-**5** Als Wert bekommt die Eigenschaft einen Regulären Ausdruck übergeben.  
+**5** Als Wert wird ein Regulärer Ausdruck übergeben.  
 
 *Hinweis 1:* Im inputs Objekt können mehrere Eigenschaften eingegeben werden.  
 *Hinweis 2:* Die Nachricht im Fehlerfeld wird aus dem title Attribut des input Elementes generiert.  
@@ -66,10 +66,10 @@ Validate({
 ```
 ## Styling
 ### Errorbox
-Zum Styling der Fehlernachrichten stehen 3 Klassen zur Verfügung.
+Zum Styling der Fehlernachrichten stehen 3 Klassen zur Verfügung.  
 **Position:** .info   
 **Box:** .errorBox   
-**Text:** .errorTrue & .errorFalse
+**Text:** .errorTrue & .errorFalse  
 
 ####Beispieldatei validate.css
 ```css
