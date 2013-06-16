@@ -5,7 +5,7 @@ var Validate = (function (config) {
     var doc = document,
         con = config,
         // Typ des Paramaters ermitteln
-        arg = arguments[0],
+        arg = Array.prototype.slice.call(arguments)[0],
         // Ist das Argument ein String
         isString = typeof arg === "string",
         // ID des Formulars im String oder Objekt 
@@ -72,6 +72,9 @@ var Validate = (function (config) {
                         .replace(/\^/g, "")
                         .replace(/i/, "")
                         .replace(/\$/, ""));
+
+                        // Native Pflichtfeldfunktion
+                        fields[i].setAttribute("required" , "required");
                     }
                     // Append span.info
                     fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
@@ -123,12 +126,10 @@ var Validate = (function (config) {
             var size = 0,
                 // argumente in array umwandeln
                 arg = Array.prototype.slice.call(arguments)[0],
-                // o = Object.prototype.toString.call(arguments[0]),
-                typeOfArg = (NodeList) ? arg instanceof NodeList : arg instanceof StaticNodeList,
                 key;
 
-            if (typeOfArg) {
-                for (var i = 0; i < arg[i].length; i++) {
+            if (arg.length) {
+                for (var i = 0; i < arg.length; i++) {
                     if (arg[i].hasAttribute("data-reg")) {
                         size++;
                     }
@@ -169,6 +170,7 @@ var Validate = (function (config) {
             var el = eventUtility.getTarget(evt), // Element HTML
                 tag = el.tagName, // Tagname -> Rückgabe in CAPS
                 id = (el.id) ? el.id : "", // id -> damit wird im Aufrufobjekt die id geholt mit RegExp
+                len = (el.value) ? el.value.length : 0, // Pflichtfeld
                 dataSupport = dataAttribut(el, "support"), // Daten Attribut Support auslesen
                 support = supportType(dataSupport), // Element Supported true/false --> Fallback wenn nix angegeben auf Standardtype
                 defReg = defaultReg[dataAttribut(el, "reg")], // Default RegExp type=support
@@ -185,17 +187,20 @@ var Validate = (function (config) {
                 console.log("DOM Zugriff");
             }
 
+            pattern = el.pattern;
+            console.log((pattern));
+
             // Bei input Feldern 
             if ((tag === "INPUT") && reg) {
 
                 // Wird das inputfeld unterstützt
                 // Untersteht es der automatischen Validierung
                 // Ist ein pattern Wert gesetzt
-                if (el.willValidate && support && pattern) {
+                if (el.willValidate && pattern) {
                     console.log("checkValidity()");
                     // el.setAttribute("pattern", input[id].toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, ""));
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
-                    if (el.value > 0 && el.checkValidity()) {
+                    if (el.checkValidity() && len > 0) {
                         // Nur DOM Zugriff bei Veränderung
                         if(!el.classList.contains('true')) {
                             insertMsg(el, true);
@@ -208,7 +213,7 @@ var Validate = (function (config) {
                     // keine Unterstützung oben aufgeführter Vorausetzungen
                 } else {
                     console.log("match()");
-                    if (el.value.match(reg)) {
+                    if (el.value.match(reg) && len > 0) {
                         insertMsg(el, true);
                     } else {
                         insertMsg(el, false);
@@ -228,7 +233,7 @@ var Validate = (function (config) {
                 if (fields[i].value < 1) {
                     eventUtility.preventDefault(evt);
                 }
-            };
+            }
 
             // Vergleich valide Felder mit Anzahl der zu valid. Felder
             if (countFields !== validFields) {
