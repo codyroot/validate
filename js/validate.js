@@ -19,15 +19,16 @@ var Validate = (function (config) {
  
     // Default RegExp Werte
         defaultReg = {
-            // Standard RegExp
-            text: /^[a-z\s]+$/i,
+            text: /^[a-zA-Z\s]+$/,
             tel: /^[\+\(\)\s\-0-9]+$/,
-            email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i,
+            email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/,
             number: /^[0-9]+$/,
-            // Autoren RegExp in der data-reg
             postcodeGer: /^[0-9]{5}$/,
             street: /^[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,
-            fullname: /[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+/
+            fullname: /[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+/,
+            ip4: /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/,
+            ip6: /^(([0-9A-Fa-f]{1,4}:){1,7}|:)(:|([0-9A-Fa-f]{1,4}:){1,7})$/,
+            isbn: /^(ISBN )?\d-\d{6}-\d\d-\d$/
         },
 
     // Cross Browser Events
