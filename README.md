@@ -6,18 +6,18 @@ Dabei kommt die HTML5-Validerungs API und eine Fallbacklösung für ältere Browser
 ## Verwendung - Option 1
 Die Verwendung von Validate.js benötigt folgende Schritte:  
 **1:** Die Datei validate.js wird am Ende des Body Elementes eingebunden werden.  
-**2:** Das Form Element benötigt ein id Attribut.  
+**2:** Das **Form** Element benötigt ein **id** Attribut.  
 **3:** In das zu validierende Formularfeld muss das Attribut **data-reg** mit dem dazugehörigen Validierungswert notiert werden.  
-**4:** Die Funktion Validate(id) muss in einen seperaten script Element aufgerufen werden. Als Parameter muss die id des Formularelements eingetragen werden.  
-*Hinweis*: Ist das data-reg Attribut gesetzt, wird das Formularfeld automatisch zu einem Pflichtfeld.  
-*Optional*: Einbinden der validate.css, um das vorgefertigte Styling der Fehlerboxen zu verwenden.
+**4:** Die Funktion Validate(id) wird in einen seperaten script Element aufgerufen. Als Parameter muss die id des Formularelements eingetragen werden.  
+**Hinweis**: Ist das data-reg Attribut gesetzt, wird das Formularfeld automatisch zu einem Pflichtfeld.  
+**Optional**: Einbinden der validate.css, um das vorgefertigte Styling der Fehlerboxen zu verwenden.
 ### JavaScript 
 ```javascript
 // Im Parameter muss per id Selektor, die **id** des Formulares übergeben werden.
 Validate("#form");
 ```
 ### HTML Requirements
-Mit der Angabe des **data-reg** Attributes im HTML wird festgelegt wie das Feld validiert werden soll.
+Mit der Angabe des **data-reg** Attributes im HTML, wird festgelegt wie das Feld validiert werden soll.
 In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche aus genau 5 Zahlen besteht.
 ```html
 <form id="form">
@@ -29,23 +29,25 @@ In dem Beispiel ist die Eingabe einer deutschen Postleitzahl notwendig, welche a
 </form>
 ```
 ## Vorgefertigte Werte für data-reg
-**text**: Buchstaben mit Leerzeichen  
-**tel**: Zahlen, +, ()  
-**email**: user@example.org,  
-**number**: Zahlen,  
-**postcodeGer**: Fünfstellige Zahl,  
-**street**: Anfangswerte sind Buchstaben. Am Ende folgt eine Zahl + optionaler Buchstabe  
-**fullname**: 2 Wörter, die mit einem Leerzeichen getrennt sind  
+**text**: Buchstaben mit Leerzeichen - *Ein normaler Satz*  
+**tel**: Zahlen, +, () - *+49 (0)30 12345-67*  
+**email**: Buchtaben, Zahlen, Unterstrich, Punkt, @-Zeichen - *user@example.org*  
+**number**: Zahlen - *17*  
+**postcodeGer**: Fünfstellige Zahl - *04107*  
+**street**: Anfangswerte sind Buchstaben. Am Ende folgt eine Zahl + optionaler Buchstabe - *Straße 8y*  
+**fullname**: 2 Wörter, die mit einem Leerzeichen getrennt sind - *John Doe*  
+**ip4**: Maximal 3 Zahlen 3 mal mit einem Punkt - *127.0.0.1*  
+**isbn**: *ISBN 1-123456-22-1*
 ## Verwendung - Option 2
 Validate.js erlaubt auch die Verwendung von eigenen **Regulären Ausdrücken**.  
-**1** Das jeweilige **input**-Feld muss eine id erhalten.  
+**1** Das jeweilige **input**-Feld muss eine **id** erhalten.  
 **2** Die Funktion Validate(object) erwartet dabei ein JSON Objekt als Parameter.  
-**3** In die Eigenschaft **form** wird die id des Formulares eingetragen werden.  
-**4** Im **inputs** Objekt wird als Eigenschaftsname die id des zu validierenden input-Feldes eingetragen.  
-**5** Als Wert wird ein Regulärer Ausdruck übergeben.  
+**3** In die Eigenschaft **form** wird die **id** des Formulares eingetragen werden.  
+**4** Im **inputs** Objekt wird als Eigenschaftsname die **id** des zu validierenden **input**-Feldes eingetragen.  
+**5** Als **Wert** wird ein **Regulärer Ausdruck** übergeben.  
 
-*Hinweis 1:* Im inputs Objekt können mehrere Eigenschaften eingegeben werden.  
-*Hinweis 2:* Die Nachricht im Fehlerfeld wird aus dem title Attribut des input Elementes generiert.  
+**Hinweis 1:** Im inputs Objekt können mehrere Eigenschaften eingegeben werden.  
+**Hinweis 2:** Die Nachricht im Fehlerfeld wird aus dem title Attribut des input Elementes generiert.  
 ### JavaScript
 ```javascript
 Validate({
