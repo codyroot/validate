@@ -63,7 +63,7 @@ var Validate = (function (config) {
         insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
                 if (fields[i].type !== "submit") {
-                    if (fields[i].type !== "number" && dataAttribut(fields[i], "reg")) {
+                    if (!/checkbox|radio|number/.test(fields[i].type) && dataAttribut(fields[i], "reg")) {
                         // Konvertieren von RegExp zu Strings
                         var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
                         // Bestimmte zeichen aus dem Pattern Löschen
@@ -75,9 +75,10 @@ var Validate = (function (config) {
 
                         // Native Pflichtfeldfunktion
                         fields[i].setAttribute("required" , "required");
+                        // Append span.info
+                        fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
                     }
-                    // Append span.info
-                    fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
+                    // deprecated
                     fields[i].setAttribute("data-support", fields[i].type);
                 }
             }
