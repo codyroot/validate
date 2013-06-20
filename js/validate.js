@@ -228,13 +228,6 @@ var Validate = (function (config) {
             validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
             console.dir(validFields);
 
-            // Pflichtfelder
-            for (var i = 0; i < fields.length; i++) {
-                if (fields[i].value < 1) {
-                    eventUtility.preventDefault(evt);
-                }
-            }
-
             // Vergleich valide Felder mit Anzahl der zu valid. Felder
             if (countFields !== validFields) {
                 eventUtility.preventDefault(evt);
