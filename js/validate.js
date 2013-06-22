@@ -63,18 +63,20 @@ var Validate = (function (config) {
     // insert span for the error message
         insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
-                if (!/submit|checkbox|radio|number/.test(fields[i].type) && dataAttribut(fields[i], "reg")) {
-                    // Konvertieren von RegExp zu Strings
-                    var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
-                    // Bestimmte zeichen aus dem Pattern Löschen
-                    fields[i].setAttribute("pattern", setPattern
-                    .replace(/\//g, "")
-                    .replace(/\^/g, "")
-                    .replace(/i/, "")
-                    .replace(/\$/, ""));
+                if (!/submit|checkbox|radio|number/.test(fields[i].type)) {
+                    if (dataAttribut(fields[i], "reg")) {
+                        // Konvertieren von RegExp zu Strings
+                        var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
+                        // Bestimmte zeichen aus dem Pattern Löschen
+                        fields[i].setAttribute("pattern", setPattern
+                        .replace(/\//g, "")
+                        .replace(/\^/g, "")
+                        .replace(/i/, "")
+                        .replace(/\$/, ""));
+                        // Native Pflichtfeldfunktion
+                        fields[i].setAttribute("required", "required");
+                    }
 
-                    // Native Pflichtfeldfunktion
-                    fields[i].setAttribute("required" , "required");
                     // Append span.info
                     fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
                 }
@@ -138,6 +140,8 @@ var Validate = (function (config) {
                 for (key in obj) {
                     if (obj.hasOwnProperty(key)) {
                         size++;
+                        // Pflichtfeld setzen
+                        doc.getElementById(key).setAttribute("required", "required");
                     }
                 }
             }
@@ -225,8 +229,7 @@ var Validate = (function (config) {
         // Send
         send = function (evt) {
             // Aufruf nochmals, da querySel. keine Live NodeLists zurückgeben
-            validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
-            console.dir(validFields);
+            validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length;
 
             // Vergleich valide Felder mit Anzahl der zu valid. Felder
             if (countFields !== validFields) {
@@ -250,5 +253,4 @@ var Validate = (function (config) {
 
     // Reset Formular
     form.reset();
-
 });
