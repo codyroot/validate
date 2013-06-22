@@ -257,4 +257,5 @@ var Validate = (function (config) {
 
     // Reset Formular
     form.reset();
+
 });
