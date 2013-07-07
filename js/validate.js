@@ -1,7 +1,7 @@
 var Validate = (function (config) {
     "use strict";
 
-// Variablen
+    // Variablen
     var doc = document,
         con = config,
         // Typ des Paramaters ermitteln
@@ -16,7 +16,7 @@ var Validate = (function (config) {
         validFields = (isString) ? doc.querySelectorAll(arg + " .true").length : doc.querySelectorAll(con.form + " .true").length,
         // IDs der zu validierenden Inputs mit den RegExp --> für Custom Reg
         input = (con.inputs) ? con.inputs : false,
- 
+
     // Default RegExp Werte
         defaultReg = {
             text: /^[a-zA-Z\s]+$/,
@@ -25,14 +25,14 @@ var Validate = (function (config) {
             number: /^[0-9]+$/,
             postcodeGer: /^[0-9]{5}$/,
             street: /^[a-zA-ZäöüÄÖÜ \.]+ [0-9]+[a-zA-Z]?/,
-            fullname: /[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+/,
+            fullname: /^[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜ]+$/,
             ip4: /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/,
             ip6: /^(([0-9A-Fa-f]{1,4}:){1,7}|:)(:|([0-9A-Fa-f]{1,4}:){1,7})$/,
             isbn: /^(ISBN )?\d-\d{6}-\d\d-\d$/
         },
 
     // Cross Browser Events
-        eventUtility = {
+        eventUtilityDEPRECATED = {
             addEvent: function (el, type, fn) {
                 if (el.addEventListener) {
                     el.addEventListener(type, fn, false);
@@ -63,7 +63,8 @@ var Validate = (function (config) {
     // insert span for the error message
         insertElement = function () {
             for (var i = 0; i < fields.length; i++) {
-                if (!/submit|checkbox|radio|number/.test(fields[i].type)) {
+                var title = (fields[i].title) ? fields[i].title : "";
+                if (!/submit|reset|checkbox|radio|number/.test(fields[i].type)) {
                     if (dataAttribut(fields[i], "reg")) {
                         // Konvertieren von RegExp zu Strings
                         var setPattern = defaultReg[dataAttribut(fields[i], "reg")].toString();
@@ -78,7 +79,7 @@ var Validate = (function (config) {
                     }
 
                     // Append span.info
-                    fields[i].insertAdjacentHTML("afterend", "<span class='info'></span>");
+                    fields[i].insertAdjacentHTML("afterend", "<span class='info' title='" + title + "'></span>");
                 }
                 // deprecated
                 fields[i].setAttribute("data-support", fields[i].type);
@@ -94,7 +95,7 @@ var Validate = (function (config) {
         },
 
     // Pattern Attribut bereinigen
-        clearPattern = function (el){
+        clearPattern = function (el) {
             return el.toString().replace(/\//g, "").replace(/\^/g, "").replace(/\$/, "");
         },
 
@@ -206,11 +207,11 @@ var Validate = (function (config) {
                     // HTML 5 E-Mail Validierung JavaScript API + Länge des Felder
                     if (el.checkValidity() && len > 0) {
                         // Nur DOM Zugriff bei Veränderung
-                        if(!el.classList.contains('true')) {
+                        if (!el.classList.contains('true')) {
                             insertMsg(el, true);
                         }
                     } else {
-                        if(!el.classList.contains("false")) {
+                        if (!el.classList.contains("false")) {
                             insertMsg(el, false);
                         }
                     }
@@ -239,15 +240,63 @@ var Validate = (function (config) {
 
             console.log(countFields + " || " + validFields);
             alert(countFields + " || " + validFields);
+        },
+        // IE 6 - 9 Detection
+        isIe = /MSIE 7.0|MSIE 8.0|MSIE 9.0/.test(navigator.userAgent),
+
+// Implementierung nach Init-Time Branching
+        // Eventschnittstelle
+        eventUtility = {
+            addEvent: null,
+            getTarget: null,
+            preventDefault: null
         };
 
-    // Cross Browser Events
-    eventUtility.addEvent(form, "keyup", event);
-    eventUtility.addEvent(form, "change", event);
+    // Moderne Browser
+    if (typeof window.addEventListener === 'function') {
+        eventUtility.addEvent = function (el, type, fn) {
+            el.addEventListener(type, fn, false);
+        };
+        eventUtility.preventDefault = function (event) {
+            event.preventDefault();
+        };
+        eventUtility.getTarget = function (event) {
+            return event.target;
+        };
+        // IE < 9    
+    } else if (doc.attachEvent) {
+        console.log("dfasdfasdf");
+        eventUtility.addEvent = function (el, type, fn) {
+            el.attachEvent('on' + type, fn);
+        };
+        eventUtility.preventDefault = function (event) {
+            return event.returnValue = false;
+        };
+        eventUtility.getTarget = function (event) {
+            return event.srcElement;
+        };
+        // älltere Browser
+    } else {
+        eventUtility.addEvent = function (el, type, fn) {
+            el['on' + type] = fn;
+        };
+    }
 
+    // Cross Browser Events
+    // input oder keyup Event Detection
+    if ('oninput' in document.createElement('input') && !isIe) {
+        // IE 9-- erkennt Rücktaste nicht
+        eventUtility.addEvent(form, "input", event);
+        console.log("Input");
+
+    } else {
+        eventUtility.addEvent(form, "keyup", event);
+        console.log("Keyup");
+    }
+    // Change event - da kopieren mgl ist
+    eventUtility.addEvent(form, "change", event);
     // Append spans after the inputs
     eventUtility.addEvent(window, "load", insertElement);
-
     // Senden Button
     eventUtility.addEvent(form, "submit", send);
 
