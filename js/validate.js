@@ -1,3 +1,10 @@
+// JSHint Errors
+/*global window */
+/*global document */
+/*global console */
+/*global alert */
+/*global navigator */
+
 var Validate = (function (config) {
     "use strict";
 
@@ -29,35 +36,6 @@ var Validate = (function (config) {
             ip4: /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/,
             ip6: /^(([0-9A-Fa-f]{1,4}:){1,7}|:)(:|([0-9A-Fa-f]{1,4}:){1,7})$/,
             isbn: /^(ISBN )?\d-\d{6}-\d\d-\d$/
-        },
-
-    // Cross Browser Events
-        eventUtilityDEPRECATED = {
-            addEvent: function (el, type, fn) {
-                if (el.addEventListener) {
-                    el.addEventListener(type, fn, false);
-                } else if (el.attachEvent) {
-                    el.attachEvent("on" + type, fn);
-                } else {
-                    el["on" + type] = fn;
-                }
-            },
-
-            getTarget: function (event) {
-                if (event.target) {
-                    return event.target;
-                } else {
-                    return event.srcElement;
-                }
-            },
-
-            preventDefault: function (event) {
-                if (event.preventDefault) {
-                    event.preventDefault();
-                } else {
-                    event.returnValue = false;
-                }
-            }
         },
 
     // insert span for the error message
@@ -195,7 +173,7 @@ var Validate = (function (config) {
             pattern = el.pattern;
             console.log((pattern));
 
-            // Bei input Feldern 
+            // Bei input Feldern
             if ((tag === "INPUT") && reg) {
 
                 // Wird das inputfeld unterstützt
@@ -263,19 +241,19 @@ var Validate = (function (config) {
         eventUtility.getTarget = function (event) {
             return event.target;
         };
-        // IE < 9    
+        // IE < 9
     } else if (doc.attachEvent) {
         console.log("dfasdfasdf");
         eventUtility.addEvent = function (el, type, fn) {
             el.attachEvent('on' + type, fn);
         };
         eventUtility.preventDefault = function (event) {
-            return event.returnValue = false;
+            event.returnValue = false;
         };
         eventUtility.getTarget = function (event) {
             return event.srcElement;
         };
-        // älltere Browser
+        // ältere Browser
     } else {
         eventUtility.addEvent = function (el, type, fn) {
             el['on' + type] = fn;

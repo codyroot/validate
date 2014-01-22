@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>Validate.js Example</title>
@@ -9,6 +10,7 @@
     <link href="style/validate.css" rel="stylesheet" />
     <link href="style/media.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="size"></div>
     <div class="wrapper">
@@ -22,7 +24,7 @@
                     <legend>Personal</legend>
                     <div>
                         <label for="postcode" class="required">Postcode</label>
-                        <input type="text" id="postcode" data-reg="postcodeGer" />
+                        <input type="text" id="postcode" data-reg="postcodeGer" title="Eine Postleitzahl muss 5 Ziffern haben!" />
                     </div>
                 </fieldset>
 
@@ -30,8 +32,7 @@
                     <legend>Contact</legend>
                     <div>
                         <label for="tel" class="required">Phone</label>
-                        <input id="tel" name="tel" type="tel" 
-                            placeholder="+49 176 123 456" title="Valid Chars: Numbers, +, ()" />
+                        <input id="tel" name="tel" type="tel" placeholder="+49 176 123 4567" title="Valid Chars: Numbers, +, ()" />
                     </div>
                 </fieldset>
                 <input type="submit" value="Send" id="senden" />
@@ -47,12 +48,13 @@
             form: "#form", // get the form
             // Valid field: id: RegExp
             inputs: {
-                postcode: /^[0-5]+$/,
+                postcode: /^[0-9]{5}$/,
                 tel: /^[\+\(\)\s0-9]+$/
             }
         });
-        // vorgefertigte Reg
-        var g = new Validate("#form");
+         // vorgefertigte Reg
+         // var g = new Validate("#form");
     </script>
 </body>
+
 </html>
